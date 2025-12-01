@@ -21,12 +21,12 @@ const TopBar = () => {
   let isScrolling = false;
 
   const menuLinks = [
-    { label: "Index", route: "/" },
-    { label: "Studio", route: "/studio" },
-    { label: "Our Spaces", route: "/spaces" },
-    { label: "One Installation", route: "/sample-space" },
-    { label: "Blueprints", route: "/blueprints" },
-    { label: "Connect", route: "/connect" },
+    { label: "Hero", route: "#hero" },
+    { label: "What We Do", route: "#what-we-do" },
+    { label: "Featured Projects", route: "#featured-projects" },
+    { label: "Client Reviews", route: "#client-reviews" },
+    { label: "How I Work", route: "#how-i-work" },
+    { label: "About Me", route: "#about-me" },
   ];
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const TopBar = () => {
           duration: 0.5,
           stagger: {
             amount: 0.3,
-            from: "end", // Start from the end (rightmost link)
+            from: "start", // Start from the start (leftmost link)
           },
           ease: "power3.out",
         });
@@ -133,14 +133,22 @@ const TopBar = () => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="menu-hover-links" ref={menuLinksRef}>
-          {menuLinks.slice().reverse().map((link, index) => (
+          {menuLinks.map((link, index) => (
             <a
               key={index}
               href={link.route}
               className="menu-hover-link"
               onClick={(e) => {
                 e.preventDefault();
-                navigateWithTransition(link.route);
+                if (link.route.startsWith("#")) {
+                  // Smooth scroll to section
+                  const element = document.querySelector(link.route);
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                } else {
+                  navigateWithTransition(link.route);
+                }
               }}
             >
               {link.label}

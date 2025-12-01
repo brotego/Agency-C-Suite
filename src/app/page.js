@@ -7,13 +7,11 @@ import CustomEase from "gsap/CustomEase";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
 
-import Nav from "@/components/Nav/Nav";
 import ConditionalFooter from "@/components/ConditionalFooter/ConditionalFooter";
 import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
 import FeaturedProjects from "@/components/FeaturedProjects/FeaturedProjects";
 import ClientReviews from "@/components/ClientReviews/ClientReviews";
 import HowIWork from "@/components/HowIWork/HowIWork";
-import CTAWindow from "@/components/CTAWindow/CTAWindow";
 import Copy from "@/components/Copy/Copy";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
@@ -24,8 +22,7 @@ export default function Home() {
 
   return (
     <>
-      <Nav />
-      <section className="hero">
+      <section id="hero" className="hero">
         <div className="container">
           <div className="hero-content">
             <div className="hero-header">
@@ -44,7 +41,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="what-we-do">
+      <section id="what-we-do" className="what-we-do">
         <div className="container">
           <div className="what-we-do-content">
             <div className="what-we-do-col">
@@ -70,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="featured-projects-container">
+      <section id="featured-projects" className="featured-projects-container">
         <div className="container">
           <div className="featured-projects-header-callout">
             <Copy delay={0.1}>
@@ -85,7 +82,7 @@ export default function Home() {
         </div>
         <FeaturedProjects />
       </section>
-      <section className="client-reviews-container">
+      <section id="client-reviews" className="client-reviews-container">
         <div className="container">
           <div className="client-reviews-header-callout">
             <p>Words from friends</p>
@@ -93,12 +90,12 @@ export default function Home() {
           <ClientReviews />
         </div>
       </section>
-      <section className="how-i-work-container">
+      <section id="how-i-work" className="how-i-work-container">
         <div className="container">
           <HowIWork />
         </div>
       </section>
-      <section className="about-me-container">
+      <section id="about-me" className="about-me-container">
         <div className="container">
           <div className="about-me-header-callout">
             <Copy delay={0.1}>
