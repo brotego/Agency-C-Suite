@@ -1,0 +1,72 @@
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.top-bar .btn {
+  width: 10rem;
+  transform: rotate(180deg);
+}
+
+.top-bar .btn .button-text {
+  transform: translate(-50%, -50%) rotate(-180deg);
+}
+
+.top-bar .top-bar-logo {
+  width: auto;
+  max-width: 5rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .top-bar-logo img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.top-bar .top-bar-cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-hover-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.menu-hover-link {
+  color: var(--base-100);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.menu-hover-link:hover {
+  color: var(--base-300);
+}
+
+@media (max-width: 1000px) {
+  .top-bar {
+    padding: 0.5rem 1.5rem;
+  }
+}

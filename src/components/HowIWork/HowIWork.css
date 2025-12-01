@@ -1,0 +1,174 @@
+.how-i-work {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.how-i-work-content {
+  width: 100%;
+  max-width: 1400px;
+  position: relative;
+  padding: 2rem;
+}
+
+.how-i-work-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.how-i-work-title-large {
+  position: absolute;
+  top: -6rem;
+  left: 0;
+  font-size: 3.5rem;
+  color: var(--base-100);
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 550;
+  letter-spacing: -0.15rem;
+  line-height: 1.2;
+}
+
+.how-i-work-title {
+  font-size: 1rem;
+  color: var(--base-350);
+  margin: 0;
+  white-space: nowrap;
+  position: relative;
+}
+
+.how-i-work-description {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  max-width: 500px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  text-align: right;
+  z-index: 10;
+}
+
+.how-i-work-description p {
+  font-size: 1rem;
+  color: var(--base-100);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.how-i-work-bubbles {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.how-i-work-bubble {
+  flex: 1;
+  border: 1px solid var(--base-400);
+  border-radius: 4rem;
+  color: var(--base-100);
+  background-color: transparent;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: scale(1);
+  overflow: hidden;
+}
+
+.how-i-work-bubble-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #263886;
+  border-radius: 4rem;
+  z-index: 0;
+  will-change: width;
+}
+
+.how-i-work-bubble h3 {
+  position: relative;
+  z-index: 1;
+}
+
+.how-i-work-bubble:hover {
+  border-color: var(--base-300);
+}
+
+.how-i-work-bubble.active {
+  border-color: var(--base-300);
+  transform: scale(1.1);
+}
+
+.how-i-work-bubble h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin: 0;
+  color: var(--base-100);
+  white-space: nowrap;
+}
+
+.how-i-work-bubble p {
+  font-size: 0.875rem;
+  color: var(--base-250);
+  margin: 0;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+@media (max-width: 1000px) {
+  .how-i-work {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
+  .how-i-work-content {
+    padding: 1rem;
+  }
+
+  .how-i-work-description {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    top: auto;
+    right: auto;
+  }
+
+  .how-i-work-bubbles {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0;
+  }
+
+  .how-i-work-bubble {
+    padding: 1rem 0.75rem;
+  }
+
+  .how-i-work-bubble h3 {
+    font-size: 1.25rem;
+  }
+
+  .how-i-work-bubble p {
+    font-size: 0.875rem;
+  }
+}
+
