@@ -97,7 +97,7 @@ const TopBar = () => {
           duration: 0.5,
           stagger: {
             amount: 0.3,
-            from: "start", // Start from the start (leftmost link)
+            from: "end", // Start from the end (rightmost link) - animates right to left
           },
           ease: "power3.out",
         });
