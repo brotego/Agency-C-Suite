@@ -3,8 +3,11 @@ import ClientLayout from "@/client-layout";
 import TopBar from "@/components/TopBar/TopBar";
 
 export const metadata = {
-  title: "Terrene | MWT by Codegrid ",
-  description: "Monthly Website Template by Codegrid | August 2025",
+  title: "Agency C-Suite | Fractional Executives",
+  description: "Fractional Executives for Start-up and Independent Creative Agencies",
+  icons: {
+    icon: "/logo.JPEG",
+  },
 };
 
 export default function RootLayout({ children }) {
