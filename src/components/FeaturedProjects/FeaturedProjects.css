@@ -34,6 +34,33 @@
   overflow: hidden;
 }
 
+.featured-projects .featured-project-card-hover-hint {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  color: var(--base-300);
+  font-size: 0.875rem;
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.featured-projects .featured-project-card-hover-hint p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.featured-projects .featured-project-card-hover-hint .arrow-down {
+  font-size: 1rem;
+}
+
+.featured-projects .featured-project-card-inner:has(.featured-project-tag:hover) .featured-project-card-hover-hint,
+.featured-projects .featured-project-card-tags-wrapper:hover ~ .featured-project-card-hover-hint {
+  opacity: 0;
+}
+
 .featured-projects .featured-project-card-content {
   display: flex;
   flex-direction: column;

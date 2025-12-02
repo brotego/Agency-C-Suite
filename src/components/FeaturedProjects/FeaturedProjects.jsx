@@ -68,6 +68,9 @@ const FeaturedProjects = () => {
         {featuredProjectsContent.map((project, index) => (
           <div key={index} className="featured-project-card" data-card-index={index}>
             <div className="featured-project-card-inner">
+              <div className="featured-project-card-hover-hint">
+                <p>Hover over the bubbles <span className="arrow-down">↓</span></p>
+              </div>
               <div className="featured-project-card-content">
                 <div className="featured-project-card-content-main">
                   <div className="featured-project-card-title">
