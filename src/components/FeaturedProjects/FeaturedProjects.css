@@ -1,7 +1,7 @@
 .featured-projects {
   position: relative;
   width: 100vw;
-  background-color: var(--base-500);
+  background-color: #ffffff;
   color: var(--base-100);
   padding: 1rem;
 }
@@ -37,7 +37,7 @@
 .featured-projects .featured-project-card-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex: 1;
 }
 
@@ -51,20 +51,27 @@
 
 .featured-projects .featured-project-card-info {
   padding: 0;
-  text-align: left;
+  text-align: right;
   color: var(--base-350);
-  margin-bottom: 1rem;
+  margin: 0;
+  font-size: 0.875rem;
+  width: 100%;
+  max-width: 500px;
 }
 
 .featured-projects .featured-project-card-title h2 {
   padding: 0 0 0.5rem 0;
   color: var(--base-100);
+  font-size: 3.75rem;
 }
 
 .featured-projects .featured-project-card-description {
   width: 85%;
   text-align: left;
   color: var(--base-250);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .featured-projects .featured-project-card-tags-wrapper {
@@ -75,6 +82,7 @@
   justify-content: flex-end;
   padding: 1rem 0;
   position: relative;
+  gap: 1rem;
 }
 
 .featured-projects .featured-project-card-tags {
@@ -111,6 +119,7 @@
   margin: 0;
   color: var(--base-100);
   white-space: nowrap;
+  letter-spacing: 0.05em;
 }
 
 /* Card 1 (Start-up) - Smaller bubbles */
@@ -151,7 +160,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--base-500);
+  background-color: #ffffff;
   opacity: var(--after-opacity, 0);
   will-change: opacity;
   pointer-events: none;
@@ -180,11 +189,17 @@
     width: 100%;
     margin: 0 auto;
     text-align: center;
+    font-size: 0.75rem;
+    max-width: 100%;
   }
 
   .featured-projects .featured-project-card-title {
     width: 100%;
     text-align: center;
+  }
+
+  .featured-projects .featured-project-card-title h2 {
+    font-size: 2.5rem;
   }
 
   .featured-projects .featured-project-card-description {

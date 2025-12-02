@@ -7,10 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const HowIWork = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visibleDescriptions, setVisibleDescriptions] = useState(new Set([0]));
   const sectionRef = useRef(null);
   const bubblesRef = useRef(null);
-  const descriptionRef = useRef(null);
   const titleRef = useRef(null);
+  const lastProgressRef = useRef(0);
 
   const workMethods = [
     {
@@ -38,7 +39,6 @@ const HowIWork = () => {
     if (!section) return;
 
     const bubbleElements = gsap.utils.toArray(".how-i-work-bubble");
-    const description = descriptionRef.current;
     const totalBubbles = bubbleElements.length;
     const scrollDistance = totalBubbles * 200; // 200vh per bubble for slower, smoother fill
 
@@ -64,6 +64,30 @@ const HowIWork = () => {
           totalBubbles - 1
         );
         setActiveIndex(newIndex);
+        
+        // Track scroll direction and keep descriptions visible
+        const isScrollingForward = progress > lastProgressRef.current;
+        lastProgressRef.current = progress;
+        
+        if (isScrollingForward) {
+          // When scrolling forward, add current index to visible set
+          setVisibleDescriptions(prev => {
+            const newSet = new Set(prev);
+            for (let i = 0; i <= newIndex; i++) {
+              newSet.add(i);
+            }
+            return newSet;
+          });
+        } else {
+          // When scrolling backward, remove indices after current
+          setVisibleDescriptions(prev => {
+            const newSet = new Set(prev);
+            for (let i = newIndex + 1; i < totalBubbles; i++) {
+              newSet.delete(i);
+            }
+            return newSet;
+          });
+        }
 
         // Animate bubbles and blue fill
         bubbleElements.forEach((bubble, index) => {
@@ -107,6 +131,26 @@ const HowIWork = () => {
             gsap.set(circle, {
               width: `${fillProgress * 100}%`,
             });
+            
+            // Get the h3 element and animate text color based on fill progress
+            const h3 = bubble.querySelector("h3");
+            if (h3) {
+              // Smoothly transition text color as blue circle expands
+              // Use fillProgress directly for natural synchronization
+              if (fillProgress > 0) {
+                // Interpolate color from dark grey to white
+                const r = gsap.utils.interpolate(20, 255, fillProgress);
+                const g = gsap.utils.interpolate(19, 255, fillProgress);
+                const b = gsap.utils.interpolate(19, 255, fillProgress);
+                gsap.set(h3, { 
+                  color: `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
+                });
+              } else {
+                gsap.set(h3, { 
+                  color: "var(--base-500)"
+                });
+              }
+            }
           }
           
           // Animate bubble scale and border smoothly
@@ -122,46 +166,10 @@ const HowIWork = () => {
       },
     });
 
-    // Position title and description relative to bubbles
-    const positionTextElements = () => {
-      if (!bubblesRef.current || !titleRef.current || !descriptionRef.current) return;
-      
-      const bubbles = bubblesRef.current;
-      const firstBubble = bubbles.querySelector(".how-i-work-bubble:first-child");
-      const lastBubble = bubbles.querySelector(".how-i-work-bubble:last-child");
-      const content = sectionRef.current?.querySelector(".how-i-work-content");
-      
-      if (firstBubble && lastBubble && content) {
-        // Get positions relative to the content container
-        const contentRect = content.getBoundingClientRect();
-        const firstBubbleRect = firstBubble.getBoundingClientRect();
-        const lastBubbleRect = lastBubble.getBoundingClientRect();
-        
-        // Position title at left edge of first bubble (relative to content)
-        const titleLeft = firstBubbleRect.left - contentRect.left;
-        gsap.set(titleRef.current, {
-          left: `${titleLeft}px`,
-        });
-        
-        // Position description at right edge of last bubble (relative to content)
-        const descriptionRight = contentRect.right - lastBubbleRect.right;
-        gsap.set(descriptionRef.current, {
-          right: `${descriptionRight}px`,
-        });
-      }
-    };
-
-    // Position on mount and resize
-    positionTextElements();
-    window.addEventListener("resize", positionTextElements);
-    
-    // Also position after a short delay to ensure bubbles are rendered
-    const timeout = setTimeout(positionTextElements, 100);
+    // Title is now centered, no positioning needed
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      window.removeEventListener("resize", positionTextElements);
-      clearTimeout(timeout);
     };
   }, []);
 
@@ -170,21 +178,22 @@ const HowIWork = () => {
       <div className="how-i-work-content">
         <div className="how-i-work-header" ref={titleRef}>
           <h2 className="how-i-work-title-large">How I Work With Clients</h2>
-          <p className="how-i-work-title">Every partnership looks different —<br />together we'll define the structure that drives the greatest impact.</p>
-        </div>
-        <div className="how-i-work-description" ref={descriptionRef}>
-          <p>{workMethods[activeIndex].description}</p>
+          <p className="how-i-work-title">Every partnership is different. Together we will define the structure that works best for you based on your needs.</p>
         </div>
         <div className="how-i-work-bubbles" ref={bubblesRef}>
           {workMethods.map((method, index) => (
-            <div 
-              key={index} 
-              className={`how-i-work-bubble ${index === activeIndex ? "active" : ""}`}
-            >
-              <span className="how-i-work-bubble-circle"></span>
-              <Copy delay={0.1 + index * 0.05}>
-                <h3>{method.title}</h3>
-              </Copy>
+            <div key={index} className="how-i-work-bubble-wrapper">
+              <div 
+                className={`how-i-work-bubble ${index === activeIndex ? "active" : ""}`}
+              >
+                <span className="how-i-work-bubble-circle"></span>
+                <Copy delay={0.1 + index * 0.05}>
+                  <h3>{method.title}</h3>
+                </Copy>
+              </div>
+              <div className={`how-i-work-bubble-description ${visibleDescriptions.has(index) ? "active" : ""}`}>
+                <p>{method.description}</p>
+              </div>
             </div>
           ))}
         </div>

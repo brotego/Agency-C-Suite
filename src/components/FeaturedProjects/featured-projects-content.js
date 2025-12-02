@@ -1,6 +1,6 @@
 const featuredProjectsContent = [
   {
-    info: "How I Can Help",
+    info: "Where We Can Help",
     title: "Start-up",
     description:
       "Are you just starting your agency and don't know where to begin?",
@@ -19,10 +19,12 @@ const featuredProjectsContent = [
     ],
   },
   {
-    info: "How I Can Help",
+    info: "Where We Can Help",
     title: "Grow-up",
     description:
-      "Have you been at this for a while and looking for ways to improve your profitability, operations, new business, marketing, client satisfaction and/or employee satisfaction? Are you thinking about taking on investment or selling your agency and need help preparing so you can achieve an ideal outcome?",
+      "Have you been at this for a while and looking for ways to improve your profitability, operations, new business, marketing, client satisfaction and/or employee satisfaction?",
+    description2:
+      "Are you thinking about taking on investment or selling your agency and need help preparing so you can achieve an ideal outcome?",
     image: "/featured-projects/featured-work-2.jpg",
     tags: [
       { name: "Financial", description: "Review P&L, revenue forecast, expenses, cash flow, billing, collections" },
@@ -36,7 +38,7 @@ const featuredProjectsContent = [
     ],
   },
   {
-    info: "How I Can Help",
+    info: "Where We Can Help",
     title: "Scale-up",
     description:
       "Do you have an opportunity to scale and need help securing it and managing the resulting growth?",

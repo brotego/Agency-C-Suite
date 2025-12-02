@@ -7,7 +7,7 @@
   outline: none;
   border: none;
   font-size: 0.9rem;
-  background: rgba(242, 237, 230, 0.75);
+  background: var(--base-300);
   backdrop-filter: blur(10px);
   border-radius: 4rem;
   cursor: pointer;
@@ -33,7 +33,7 @@
   position: absolute;
   top: 0.775rem;
   left: 0.95rem;
-  color: var(--base-100);
+  color: #ffffff;
   font-size: 1.5rem;
   transform: translateX(0);
   transition: all 0.5s cubic-bezier(0.65, 0, 0.076, 1);
@@ -47,7 +47,7 @@
   transform: translate(-50%, -50%);
   margin: 0 0 0 1.25rem;
   text-align: center;
-  color: var(--base-500);
+  color: #ffffff;
   font-family: "Manrope", sans-serif;
   font-weight: 600;
   line-height: 1;
@@ -68,9 +68,9 @@
 }
 
 .btn:hover .icon {
-  transform: translate(0.75rem);
+  transform: translateX(0);
 }
 
 .btn:hover .button-text {
-  color: var(--base-100);
+  color: #ffffff;
 }

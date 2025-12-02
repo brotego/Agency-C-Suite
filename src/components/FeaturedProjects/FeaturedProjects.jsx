@@ -69,19 +69,22 @@ const FeaturedProjects = () => {
           <div key={index} className="featured-project-card" data-card-index={index}>
             <div className="featured-project-card-inner">
               <div className="featured-project-card-content">
-                <div className="featured-project-card-info">
-                  <p>{project.info}</p>
-                </div>
                 <div className="featured-project-card-content-main">
                   <div className="featured-project-card-title">
                     <h2>{project.title}</h2>
                   </div>
                   <div className="featured-project-card-description">
                     <p className="lg">{project.description}</p>
+                    {project.description2 && (
+                      <p className="lg">{project.description2}</p>
+                    )}
                   </div>
                 </div>
               </div>
               <div className="featured-project-card-tags-wrapper">
+                <div className="featured-project-card-info">
+                  <p>{project.info}</p>
+                </div>
                 <div className="featured-project-card-tags">
                   {project.tags.map((tag, tagIndex) => (
                     <div

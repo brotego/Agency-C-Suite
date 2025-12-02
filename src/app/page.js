@@ -34,7 +34,7 @@ export default function Home() {
             <div className="hero-tagline">
               <Copy animateOnScroll={false} delay={1}>
                 <p>
-                Where creative vision meets disciplined leadership to unlock real growth.
+                Where creative vision meets experienced agency leadership to unlock real growth.
                 </p>
               </Copy>
             </div>
@@ -44,10 +44,12 @@ export default function Home() {
       <section id="what-we-do" className="what-we-do">
         <div className="container">
           <div className="what-we-do-content">
-            <div className="what-we-do-col">
+            <div className="what-we-do-col what-we-do-full-width">
               <Copy delay={0.1}>
-                <h2 className="what-we-do-title">What is</h2>
+                <h2 className="what-we-do-title">What is Agency C-Suite?</h2>
               </Copy>
+            </div>
+            <div className="what-we-do-col">
               <Copy delay={0.125}>
                 <p className="lg">
                   As a founder and CEO of three creative agencies, Eleven, Argonaut and TBD, I've been an evangelist of creative-driven, independent agencies for over 25 years. I'm an entrepreneur that loves conceiving, planning, building, launching, leading, and growing independent creative agencies. My superpower is knowing how to run creative businesses so that my creative partners can focus on the things they love to do and not get bogged down with things they don't.
@@ -55,9 +57,6 @@ export default function Home() {
               </Copy>
             </div>
             <div className="what-we-do-col">
-              <Copy delay={0.14}>
-                <h2 className="what-we-do-title-right">Agency C-Suite?</h2>
-              </Copy>
               <Copy delay={0.15}>
                 <p className="lg">
                   I'm now advising founders of creative agencies as a fractional CEO. Additionally, I've assembled a team of fractional experts with extensive agency experience who can help as needed in areas like Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations & IT.
@@ -69,18 +68,18 @@ export default function Home() {
       </section>
       <section id="featured-projects" className="featured-projects-container">
         <div className="container">
-          <div className="featured-projects-header-callout">
-            <Copy delay={0.1}>
-              <p>How I can help</p>
-            </Copy>
-          </div>
           <div className="featured-projects-header">
             <Copy delay={0.15}>
-              <h2>Where Are You In Your Agency Journey?</h2>
+              <h2>Where Are You On Your Agency Journey?</h2>
             </Copy>
           </div>
         </div>
         <FeaturedProjects />
+      </section>
+      <section id="how-i-work" className="how-i-work-container">
+        <div className="container">
+          <HowIWork />
+        </div>
       </section>
       <section id="client-reviews" className="client-reviews-container">
         <div className="container">
@@ -90,16 +89,11 @@ export default function Home() {
           <ClientReviews />
         </div>
       </section>
-      <section id="how-i-work" className="how-i-work-container">
-        <div className="container">
-          <HowIWork />
-        </div>
-      </section>
       <section id="about-me" className="about-me-container">
         <div className="container">
           <div className="about-me-header-callout">
             <Copy delay={0.1}>
-              <p>About me</p>
+              <p>About Jordan</p>
             </Copy>
           </div>
           <div className="about-me-header">
@@ -109,30 +103,41 @@ export default function Home() {
           </div>
           <div className="about-me-top">
             <div className="about-me-image">
-              <img src="/Jordan Warren Square.jpg" alt="About me" />
+              <img src="/Jordan Warren Square.jpg" alt="About Jordan" />
             </div>
             <div className="about-me-main-text">
               <Copy delay={0.1}>
                 <h1>
-                  Guiding creative entrepreneurs with 25+ years of agency leadership.
+                  Guiding creative entrepreneurs based on over 25 years of agency leadership.
                 </h1>
               </Copy>
             </div>
           </div>
           <div className="about-me-bottom">
-            <div className="about-me-bottom-col">
-              <Copy delay={0.15}>
-                <p>
-                  As the son of a father who was an inventor and entrepreneur and a mother who was a model and actress, I've long felt a calling to pursue a career that blends business and creativity. I've been starting businesses since I was nine-years old, beginning with a shoe shine business, a tennis racket stringing business and a rock photography business. With an undergraduate degree in computer engineering, an MBA, and sales and management training gained while client-side at IBM, I made the switch to the agency world upon the advent of the public Internet, starting one of the first Internet marketing practices at CKS.
-                </p>
-              </Copy>
+            <div className="about-me-bottom-left">
+              <div className="about-me-bottom-col">
+                <Copy delay={0.15}>
+                  <p>
+                    As the son of a father who was an inventor and entrepreneur and a mother who was a model and actress, I've long felt a calling to pursue a career that blends business and creativity. I've been starting businesses since I was nine-years old, beginning with a shoe shine business, a tennis racket stringing business and a rock photography business.
+                  </p>
+                </Copy>
+              </div>
+              <div className="about-me-bottom-col">
+                <Copy delay={0.2}>
+                  <p>
+                    With an undergraduate degree in computer engineering, an MBA, and sales and management training gained while client-side at IBM, I made the switch to the agency world upon the advent of the public Internet, starting one of the first Internet marketing practices at CKS. While at CKS I also helped build a 50-person brand marketing team for Steve Jobs upon his return to Apple.
+                  </p>
+                </Copy>
+              </div>
             </div>
-            <div className="about-me-bottom-col">
-              <Copy delay={0.2}>
-                <p>
-                  While at CKS I also helped build a 50-person brand marketing team for Steve Jobs upon his return to Apple. Since leaving CKS, I've started, built and led three integrated creative marketing agencies, Eleven, Argonaut and TBD. I now enjoy sharing my 25+ years of independent agency leadership experience with fellow agency founders who are just beginning their entrepreneurial journey.
-                </p>
-              </Copy>
+            <div className="about-me-bottom-right">
+              <div className="about-me-bottom-col">
+                <Copy delay={0.25}>
+                  <p>
+                    Since leaving CKS, I've started, built and led three integrated creative marketing agencies, Eleven, Argonaut and TBD. I now enjoy sharing my 25+ years of independent agency leadership experience with fellow agency founders who are just beginning their entrepreneurial journey.
+                  </p>
+                </Copy>
+              </div>
             </div>
           </div>
         </div>

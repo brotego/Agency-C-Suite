@@ -5,7 +5,7 @@ import Copy from "../Copy/Copy";
 
 const Footer = () => {
   return (
-    <div className="footer">
+    <div id="footer" className="footer">
       <div className="footer-meta">
         <div className="container footer-socials">
         
@@ -27,7 +27,7 @@ const Footer = () => {
               </Copy>
               <Copy delay={0.2}>
                 <p className="footer-section-item">
-                  <a href="mailto:Jordan@Agency-C-Suite.com">Jordan@Agency-C-Suite.com</a>
+                  <a href="mailto:Jordan@AgencyC-Suite.com">Jordan@AgencyC-Suite.com</a>
                 </p>
               </Copy>
               <Copy delay={0.25}>
@@ -37,7 +37,7 @@ const Footer = () => {
               </Copy>
               <Copy delay={0.3}>
                 <p className="footer-section-item">
-                  <a href="https://www.Agency-C-Suite.com" target="_blank" rel="noopener noreferrer">www.Agency-C-Suite.com</a>
+                  <a href="https://www.AgencyC-Suite.com" target="_blank" rel="noopener noreferrer">www.AgencyC-Suite.com</a>
                 </p>
               </Copy>
             </div>
@@ -49,10 +49,7 @@ const Footer = () => {
                 <p className="footer-section-item">Jordan Warren</p>
               </Copy>
               <Copy delay={0.45}>
-                <p className="footer-section-item">Fractional CEO</p>
-              </Copy>
-              <Copy delay={0.5}>
-                <p className="footer-section-item">Alliance Creative Partners</p>
+                <p className="footer-section-item">Founder and Fractional CEO</p>
               </Copy>
             </div>
           </div>
@@ -61,6 +58,9 @@ const Footer = () => {
           <div className="footer-copyright">
             <p>
               Developed by — <span>Line Labs</span>
+            </p>
+            <p className="footer-linkedin">
+              <a href="https://www.linkedin.com/in/jordanwarren" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </p>
             <p>All rights reserverd &copy; 2025</p>
           </div>

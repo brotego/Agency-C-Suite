@@ -20,12 +20,12 @@
 
 body {
   font-family: "Manrope", sans-serif;
-  background-color: #0d0c0c;
+  background-color: #ffffff;
 }
 
 section,
 .footer {
-  background-color: var(--base-500);
+  background-color: #ffffff;
 }
 
 img {
