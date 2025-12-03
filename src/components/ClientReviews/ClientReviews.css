@@ -5,70 +5,51 @@
   justify-content: center;
 }
 
-.client-reviews .container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .client-reviews .client-reviews-wrapper {
   position: relative;
-  width: 50%;
+  width: 100%;
   height: 100%;
   margin: 0 auto;
   color: var(--base-200);
 }
 
-.client-reviews .client-review-content {
-  position: relative;
+.client-reviews .client-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  width: 100%;
+  align-items: end;
+}
+
+.client-reviews .client-review-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
-}
-
-.client-reviews .client-review-img {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 1rem;
-  overflow: hidden;
-  padding: 1rem;
-  background-color: var(--base-400);
-  will-change: opacity;
-}
-
-.client-reviews .client-review-img img {
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  width: calc(100% - 1rem);
-  height: calc(100% - 1rem);
-  border-radius: 0.75rem;
-  object-fit: cover;
-  will-change: opacity;
+  height: 100%;
 }
 
 .client-reviews .client-review-copy {
   position: relative;
+  flex: 1;
 }
 
 .client-reviews .client-review-copy h3 {
-  text-align: center;
+  text-align: left;
   font-size: 1.75rem;
   color: #263886;
   line-height: 1.25;
   position: relative;
-  padding: 1rem 2rem;
+  padding: 0.25rem 0 0.5rem 0;
+  margin: 0;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .client-reviews .client-review-copy h3::before {
   content: '"';
   position: absolute;
-  top: -0.25rem;
+  top: 0;
   left: 0;
   font-size: 4rem;
   color: #263886;
@@ -79,7 +60,7 @@
 .client-reviews .client-review-copy h3::after {
   content: '"';
   position: absolute;
-  bottom: -0.5rem;
+  bottom: 0;
   right: 0;
   font-size: 4rem;
   color: #263886;
@@ -91,50 +72,30 @@
   will-change: transform;
 }
 
-.client-reviews .clients-list {
-  position: relative;
-  width: 100%;
-  height: 4rem;
+.client-reviews .client-item-expanded {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--base-200);
   border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  margin-top: 1rem;
-}
-
-.client-reviews .client-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  overflow: hidden;
-  background-color: var(--base-400);
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  height: 3rem;
+  padding: 0.75rem;
+  width: 100%;
   flex-shrink: 0;
-  position: relative;
-  transition: background-color 500ms ease-in-out;
-}
-
-.client-reviews .client-item:hover {
-  background-color: var(--base-200);
-}
-
-.client-reviews .client-item.active {
-  background-color: var(--base-200);
 }
 
 .client-reviews .client-avatar {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 0.25rem;
   overflow: hidden;
   flex-shrink: 0;
   position: relative;
-  z-index: 1;
+}
+
+.client-reviews .client-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .client-reviews .client-info {
@@ -144,63 +105,44 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.125rem;
-  white-space: nowrap;
-  position: relative;
-  will-change: opacity;
-  z-index: 0;
 }
 
 .client-reviews p.client-name {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--base-500);
-  line-height: 1;
+  line-height: 1.2;
   margin: 0;
-  will-change: opacity;
 }
 
 .client-reviews p.client-title {
   font-size: 0.75rem;
   color: var(--base-300);
-  line-height: 1;
+  line-height: 1.2;
   margin: 0;
-  will-change: opacity;
 }
 
 @media (max-width: 1200px) {
-  .client-reviews .client-reviews-wrapper {
-    width: 50%;
+  .client-reviews .client-review-copy h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .client-reviews .client-reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .client-reviews .client-review-copy h3 {
     font-size: 1.25rem;
   }
-}
-
-@media (max-width: 1000px) {
-  .client-reviews-container {
-    height: 100svh;
-  }
-
-  .client-reviews .client-reviews-wrapper {
-    width: 100%;
-  }
-
-  .client-reviews .container {
-    padding: 0;
-  }
-
-  .client-reviews .clients-list {
-    margin-top: 1rem;
-  }
 
   .client-reviews p.client-name {
-    font-size: 0.75rem;
-    padding-right: 2rem;
-    white-space: normal;
+    font-size: 0.85rem;
   }
 
   .client-reviews p.client-title {
-    display: none;
+    font-size: 0.7rem;
   }
 }

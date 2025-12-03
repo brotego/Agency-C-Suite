@@ -2,6 +2,7 @@
 import "./Footer.css";
 
 import Copy from "../Copy/Copy";
+import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -16,40 +17,34 @@ const Footer = () => {
           <div className="footer-outro-left">
             <div className="footer-header">
               <Copy delay={0.1}>
-                <h3>Agency C-Suite</h3>
+                <h3>Get In Touch</h3>
               </Copy>
             </div>
           </div>
           <div className="footer-outro-right">
             <div className="footer-section">
               <Copy delay={0.15}>
-                <p className="footer-section-heading">Contact</p>
-              </Copy>
-              <Copy delay={0.2}>
                 <p className="footer-section-item">
                   <a href="mailto:Jordan@AgencyC-Suite.com">Jordan@AgencyC-Suite.com</a>
                 </p>
               </Copy>
-              <Copy delay={0.25}>
+              <Copy delay={0.2}>
                 <p className="footer-section-item">
                   <a href="tel:+14158455433">+1 415 845-5433</a>
                 </p>
               </Copy>
-              <Copy delay={0.3}>
+              <Copy delay={0.25}>
                 <p className="footer-section-item">
                   <a href="https://www.AgencyC-Suite.com" target="_blank" rel="noopener noreferrer">www.AgencyC-Suite.com</a>
                 </p>
               </Copy>
-            </div>
-            <div className="footer-section">
-              <Copy delay={0.35}>
-                <p className="footer-section-heading">About</p>
-              </Copy>
-              <Copy delay={0.4}>
-                <p className="footer-section-item">Jordan Warren</p>
-              </Copy>
-              <Copy delay={0.45}>
-                <p className="footer-section-item">Founder and Fractional CEO</p>
+              <Copy delay={0.3}>
+                <p className="footer-section-item footer-linkedin-item">
+                  <a href="https://www.linkedin.com/in/jordanwarren" target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin className="linkedin-icon" />
+                    LinkedIn
+                  </a>
+                </p>
               </Copy>
             </div>
           </div>
@@ -58,9 +53,6 @@ const Footer = () => {
           <div className="footer-copyright">
             <p>
               Developed by — <span>Line Labs</span>
-            </p>
-            <p className="footer-linkedin">
-              <a href="https://www.linkedin.com/in/jordanwarren" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </p>
             <p>All rights reserverd &copy; 2025</p>
           </div>

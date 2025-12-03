@@ -6,6 +6,7 @@
   flex-direction: column;
   padding: 1rem;
   gap: 1rem;
+  margin-top: -2rem;
 }
 
 .footer .footer-meta {
@@ -127,7 +128,10 @@
 
 .footer .footer-outro .footer-header h3 {
   color: #263886;
-  font-size: 5rem;
+  font-size: 4rem;
+  font-weight: 500;
+  letter-spacing: -0.2rem;
+  line-height: 1.1;
 }
 
 .footer-section {
@@ -160,14 +164,30 @@
   color: var(--base-300);
 }
 
+.footer-linkedin-item a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-linkedin-item .linkedin-icon {
+  font-size: 1.25rem;
+}
+
 .footer-copyright {
   display: flex;
   gap: 2rem;
+  justify-content: space-between;
 }
 
 .footer-copyright p {
-  flex: 1;
   color: var(--base-400);
+  margin: 0;
+}
+
+.footer-copyright p:last-child {
+  margin-left: auto;
+  text-align: right;
 }
 
 .footer-copyright p span {
@@ -198,6 +218,11 @@
 }
 
 @media (max-width: 1000px) {
+  .footer .footer-outro .footer-header h3 {
+    font-size: 2.5rem;
+    letter-spacing: -0.1rem;
+  }
+
   .footer .footer-meta .container.footer-meta-header,
   .footer .footer-meta .container.footer-socials {
     flex-direction: column;

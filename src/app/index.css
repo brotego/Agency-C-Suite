@@ -311,19 +311,53 @@
   width: 100vw;
   height: 120svh;
   color: var(--base-500);
-  padding: 2rem 0 0 0;
+  padding: 0rem 0 0 0;
   margin-bottom: -15rem;
+  margin-top: -3rem;
+}
+
+.client-reviews-container .container {
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-top: 0;
+}
+
+@media (max-width: 1000px) {
+  .client-reviews-container .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .client-reviews-container .client-reviews-header-callout {
-  text-align: center;
-  color: var(--base-350);
-  margin-bottom: 1rem;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  margin-top: -4rem;
+  position: relative;
+  transform: translateY(-3rem);
+}
+
+.client-reviews-container .client-reviews-header-callout h2 {
+  color: #263886;
+  font-size: 4rem;
+  font-weight: 500;
+  letter-spacing: -0.2rem;
+  line-height: 1.1;
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 1000px) {
   .client-reviews-container .client-reviews-header-callout {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    margin-top: -4rem;
+    transform: translateY(-2rem);
+  }
+
+  .client-reviews-container .client-reviews-header-callout h2 {
+    font-size: 2.5rem;
+    letter-spacing: -0.1rem;
   }
 }
 
@@ -337,9 +371,10 @@
 .how-i-work-container {
   position: relative;
   width: 100vw;
-  padding: 2rem 0 2rem 0;
+  padding: 2rem 0 0rem 0;
   color: var(--base-500);
   margin-top: 0;
+  margin-bottom: -4rem;
 }
 
 .how-i-work-container .container {
@@ -366,32 +401,32 @@
 .about-me-container {
   position: relative;
   width: 100vw;
-  padding: 6rem 0 10rem 0;
+  padding: 2rem 0 2rem 0;
   color: var(--base-500);
-}
-
-.about-me-container .about-me-header-callout,
-.about-me-container .about-me-header {
-  text-align: left;
+  margin-top: -10rem;
+  margin-bottom: -4rem;
 }
 
 .about-me-container .about-me-header-callout {
-  color: var(--base-350);
-  margin-bottom: 1rem;
+  text-align: left;
+  margin-bottom: 2rem;
 }
 
-.about-me-container .about-me-header {
-  width: 50%;
-  margin: 0 0 4rem 0;
-}
-
-.about-me-container .about-me-header h2 {
+.about-me-container .about-me-header-callout h2 {
   color: #263886;
+  font-size: 4rem;
+  font-weight: 500;
+  letter-spacing: -0.2rem;
+  line-height: 1.1;
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 1000px) {
-  .about-me-container .about-me-header {
-    width: 100%;
+  .about-me-container .about-me-header-callout h2 {
+    font-size: 2.5rem;
+    letter-spacing: -0.1rem;
   }
 }
 
@@ -409,19 +444,46 @@
   min-height: 500px;
 }
 
-.about-me-image {
+.about-me-image-section {
   flex: 0 0 auto;
-  width: 45%;
-  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-me-image {
+  width: 100%;
   display: flex;
   align-items: stretch;
 }
 
 .about-me-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   border-radius: 1rem;
+}
+
+.about-me-name-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about-me-name-title h3 {
+  color: #263886;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.about-me-name-title p {
+  color: var(--base-300);
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.4;
 }
 
 .about-me-main-text {
@@ -434,6 +496,9 @@
 .about-me-main-text h1 {
   color: #263886;
   margin: 0;
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .about-me-bottom {
@@ -450,6 +515,9 @@
 
 .about-me-bottom-right {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .about-me-bottom-col {
@@ -465,7 +533,8 @@
 
 @media (max-width: 1000px) {
   .about-me-container {
-    padding: 6rem 0;
+    padding: 2rem 0;
+    margin-top: -8rem;
   }
 
   .about-me-top {
@@ -473,7 +542,7 @@
     gap: 2rem;
   }
 
-  .about-me-image {
+  .about-me-image-section {
     width: 100%;
   }
 

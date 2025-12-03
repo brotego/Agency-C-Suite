@@ -84,7 +84,7 @@ export default function Home() {
       <section id="client-reviews" className="client-reviews-container">
         <div className="container">
           <div className="client-reviews-header-callout">
-            <p>Words from friends</p>
+            <h2>From Our Friends</h2>
           </div>
           <ClientReviews />
         </div>
@@ -93,17 +93,25 @@ export default function Home() {
         <div className="container">
           <div className="about-me-header-callout">
             <Copy delay={0.1}>
-              <p>About Jordan</p>
-            </Copy>
-          </div>
-          <div className="about-me-header">
-            <Copy delay={0.15}>
-              <h2>Who am I</h2>
+              <h2>About Jordan</h2>
             </Copy>
           </div>
           <div className="about-me-top">
-            <div className="about-me-image">
-              <img src="/Jordan Warren Square.jpg" alt="About Jordan" />
+            <div className="about-me-image-section">
+              <div className="about-me-image">
+                <img src="/Jordan Warren Square.jpg" alt="About Jordan" />
+              </div>
+              <div className="about-me-name-title">
+                <Copy delay={0.1}>
+                  <h3>Jordan Warren</h3>
+                </Copy>
+                <Copy delay={0.15}>
+                  <p>Founder, Principal Advisor and Fractional CEO</p>
+                </Copy>
+                <Copy delay={0.2}>
+                  <p>Agency C-Suite</p>
+                </Copy>
+              </div>
             </div>
             <div className="about-me-main-text">
               <Copy delay={0.1}>
@@ -122,6 +130,8 @@ export default function Home() {
                   </p>
                 </Copy>
               </div>
+            </div>
+            <div className="about-me-bottom-right">
               <div className="about-me-bottom-col">
                 <Copy delay={0.2}>
                   <p>
@@ -129,8 +139,6 @@ export default function Home() {
                   </p>
                 </Copy>
               </div>
-            </div>
-            <div className="about-me-bottom-right">
               <div className="about-me-bottom-col">
                 <Copy delay={0.25}>
                   <p>
