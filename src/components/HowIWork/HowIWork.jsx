@@ -177,7 +177,7 @@ const HowIWork = () => {
     <div className="how-i-work" ref={sectionRef}>
       <div className="how-i-work-content">
         <div className="how-i-work-header" ref={titleRef}>
-          <h2 className="how-i-work-title-large">How I Work With Clients</h2>
+          <h2 className="how-i-work-title-large">How We Work</h2>
           <p className="how-i-work-title">Every partnership is different. Together we will define the structure that works best for you based on your needs.</p>
         </div>
         <div className="how-i-work-bubbles" ref={bubblesRef}>

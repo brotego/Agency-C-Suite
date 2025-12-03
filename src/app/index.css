@@ -46,9 +46,20 @@
   padding: 1rem;
 }
 
+.hero .hero-content h1 {
+  color: #263886;
+  font-size: 4rem;
+  font-weight: 500;
+  letter-spacing: -0.2rem;
+  line-height: 1.1;
+}
+
 .hero .hero-tagline {
   width: 40%;
   color: var(--base-300);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .hero .hero-stats {
@@ -105,6 +116,11 @@
     width: 75%;
   }
 
+  .hero .hero-content h1 {
+    font-size: 2.5rem;
+    letter-spacing: -0.1rem;
+  }
+
   .hero .hero-stats .container {
     flex-direction: column;
   }
@@ -132,7 +148,7 @@
 
 .what-we-do .container h1 {
   margin-bottom: 10rem;
-  color: var(--base-500);
+  color: #263886;
 }
 
 .what-we-do .what-we-do-content {
@@ -166,7 +182,7 @@
   font-weight: 500;
   letter-spacing: -0.2rem;
   line-height: 1.1;
-  color: var(--base-500);
+  color: #263886;
   text-align: left;
   margin: 0;
 }
@@ -203,7 +219,7 @@
   font-weight: 500;
   letter-spacing: -0.2rem;
   line-height: 1.1;
-  color: var(--base-500);
+  color: #263886;
   text-align: right;
   margin: 0;
 }
@@ -256,24 +272,32 @@
 .featured-projects-container {
   position: relative;
   width: 100vw;
-  padding: 10rem 0 12rem 0;
+  padding: 10rem 0 4rem 0;
   color: var(--base-500);
   overflow: hidden;
 }
 
-.featured-projects-container .featured-projects-header-callout,
-.featured-projects-container .featured-projects-header {
-  text-align: center;
-}
-
 .featured-projects-container .featured-projects-header-callout {
+  text-align: center;
   color: var(--base-350);
   margin-bottom: 2rem;
 }
 
+.featured-projects-container .container {
+  padding-left: 3rem;
+  padding-right: 1rem;
+}
+
 .featured-projects-container .featured-projects-header {
   width: 50%;
-  margin: 0 auto 2rem auto;
+  text-align: left;
+  margin: 0 0 2rem 0;
+  padding-left: 0;
+}
+
+.featured-projects-container .featured-projects-header h2 {
+  color: #263886;
+  text-align: left;
 }
 
 @media (max-width: 1000px) {
@@ -313,9 +337,14 @@
 .how-i-work-container {
   position: relative;
   width: 100vw;
-  padding: 5rem 0 2rem 0;
+  padding: 2rem 0 2rem 0;
   color: var(--base-500);
   margin-top: 0;
+}
+
+.how-i-work-container .container {
+  padding-left: 3rem;
+  padding-right: 1rem;
 }
 
 .how-i-work-container .how-i-work-header-callout {
@@ -354,6 +383,10 @@
 .about-me-container .about-me-header {
   width: 50%;
   margin: 0 0 4rem 0;
+}
+
+.about-me-container .about-me-header h2 {
+  color: #263886;
 }
 
 @media (max-width: 1000px) {
@@ -399,7 +432,7 @@
 }
 
 .about-me-main-text h1 {
-  color: var(--base-500);
+  color: #263886;
   margin: 0;
 }
 

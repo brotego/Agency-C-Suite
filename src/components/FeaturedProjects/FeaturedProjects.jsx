@@ -2,13 +2,12 @@
 import "./FeaturedProjects.css";
 import featuredProjectsContent from "./featured-projects-content";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const FeaturedProjects = () => {
-  const [hoveredTag, setHoveredTag] = useState({ cardIndex: null, tagIndex: null });
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -68,8 +67,8 @@ const FeaturedProjects = () => {
         {featuredProjectsContent.map((project, index) => (
           <div key={index} className="featured-project-card" data-card-index={index}>
             <div className="featured-project-card-inner">
-              <div className="featured-project-card-hover-hint">
-                <p>Hover over the bubbles <span className="arrow-down">↓</span></p>
+              <div className="featured-project-card-header">
+                <p>How We Can Help</p>
               </div>
               <div className="featured-project-card-content">
                 <div className="featured-project-card-content-main">
@@ -82,29 +81,22 @@ const FeaturedProjects = () => {
                       <p className="lg">{project.description2}</p>
                     )}
                   </div>
-                </div>
-              </div>
-              <div className="featured-project-card-tags-wrapper">
-                <div className="featured-project-card-info">
-                  <p>{project.info}</p>
-                </div>
-                <div className="featured-project-card-tags">
-                  {project.tags.map((tag, tagIndex) => (
-                    <div
-                      key={tagIndex}
-                      className="featured-project-tag"
-                      onMouseEnter={() => setHoveredTag({ cardIndex: index, tagIndex })}
-                      onMouseLeave={() => setHoveredTag({ cardIndex: null, tagIndex: null })}
-                    >
-                      <h3>{tag.name}</h3>
+                  <div className="featured-project-card-tags-wrapper">
+                    <div className="featured-project-card-info">
+                      <p>{project.info}</p>
                     </div>
-                  ))}
-                </div>
-                {hoveredTag.cardIndex === index && hoveredTag.tagIndex !== null && (
-                  <div className="featured-project-tag-hover-text">
-                    <p>{project.tags[hoveredTag.tagIndex].description}</p>
+                    <div className="featured-project-card-tags">
+                      {project.tags.map((tag, tagIndex) => (
+                        <div
+                          key={tagIndex}
+                          className="featured-project-tag"
+                        >
+                          <h3>{tag.name}</h3>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
