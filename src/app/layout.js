@@ -1,7 +1,6 @@
 import "./globals.css";
 import ClientLayout from "@/client-layout";
 import TopBar from "@/components/TopBar/TopBar";
-import SplashScreen from "@/components/SplashScreen/SplashScreen";
 
 export const metadata = {
   title: "Agency C-Suite | Fractional Executives",
@@ -15,7 +14,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <SplashScreen />
         <ClientLayout>
           <TopBar />
           {children}

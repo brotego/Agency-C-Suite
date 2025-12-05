@@ -57,6 +57,9 @@
 .hero .hero-tagline {
   width: 40%;
   color: var(--base-300);
+}
+
+.hero .hero-tagline p {
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.4;
@@ -289,7 +292,7 @@
 }
 
 .featured-projects-container .featured-projects-header {
-  width: 50%;
+  width: 80%;
   text-align: left;
   margin: 0 0 2rem 0;
   padding-left: 0;
@@ -438,15 +441,14 @@
 
 .about-me-top {
   display: flex;
-  gap: 3rem;
-  margin-bottom: 3rem;
-  align-items: stretch;
-  min-height: 500px;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
 }
 
 .about-me-image-section {
   flex: 0 0 auto;
-  width: 40%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -479,6 +481,24 @@
   line-height: 1.2;
 }
 
+.about-me-name-title h3 .linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  color: #263886;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.about-me-name-title h3 .linkedin-link:hover {
+  opacity: 0.7;
+}
+
+.about-me-name-title h3 .linkedin-icon {
+  font-size: 1.25rem;
+}
+
 .about-me-name-title p {
   color: var(--base-300);
   font-size: 1rem;
@@ -489,16 +509,18 @@
 .about-me-main-text {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  height: 100%;
+  gap: 1.5rem;
 }
 
 .about-me-main-text h1 {
   color: #263886;
   margin: 0;
-  font-size: 4rem;
+  font-size: 2.5rem;
   font-weight: 500;
   line-height: 1.2;
+  max-width: 600px;
 }
 
 .about-me-bottom {

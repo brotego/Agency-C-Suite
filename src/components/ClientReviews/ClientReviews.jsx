@@ -58,6 +58,7 @@ const ClientReviews = () => {
               <div className="client-review-copy">
                 <h3 ref={(el) => (reviewTextRefs.current[index] = el)}>
                   {client.review}
+                  <span className="closing-quote">"</span>
                 </h3>
               </div>
               <div className="client-item-expanded">

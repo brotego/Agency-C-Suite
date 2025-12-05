@@ -6,8 +6,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const HowIWork = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleDescriptions, setVisibleDescriptions] = useState(new Set([0]));
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [visibleDescriptions, setVisibleDescriptions] = useState(new Set());
   const sectionRef = useRef(null);
   const bubblesRef = useRef(null);
   const titleRef = useRef(null);
@@ -16,7 +16,7 @@ const HowIWork = () => {
   const workMethods = [
     {
       title: "Monthly Retainer",
-      description: "Ongoing support for you and your team",
+      description: "Ongoing support for your team",
     },
     {
       title: "Project Fee",
@@ -28,7 +28,7 @@ const HowIWork = () => {
     },
     {
       title: "Referral",
-      description: "Connect you with fractional experts in Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations, IT",
+      description: "Connect you with fractional agency experts in Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations & IT",
     },
   ];
 
@@ -41,6 +41,14 @@ const HowIWork = () => {
     const bubbleElements = gsap.utils.toArray(".how-i-work-bubble");
     const totalBubbles = bubbleElements.length;
     const scrollDistance = totalBubbles * 200; // 200vh per bubble for slower, smoother fill
+
+    // Initialize all bubbles to dark text color before scrolling starts
+    bubbleElements.forEach((bubble) => {
+      const h3 = bubble.querySelector("h3");
+      if (h3) {
+        gsap.set(h3, { color: "var(--base-500)" });
+      }
+    });
 
     // Pin the section
     const pinTrigger = ScrollTrigger.create({

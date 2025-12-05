@@ -26,7 +26,7 @@ const TopBar = () => {
     { label: "Where We Can Help", route: "#featured-projects" },
     { label: "How We Work", route: "#how-i-work" },
     { label: "From Our Friends", route: "#client-reviews" },
-    { label: "About Jordan", route: "#about-me" },
+    { label: "About", route: "#about-me" },
     { label: "Get in Touch", route: "#footer" },
   ];
 

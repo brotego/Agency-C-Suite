@@ -13,6 +13,7 @@ import FeaturedProjects from "@/components/FeaturedProjects/FeaturedProjects";
 import ClientReviews from "@/components/ClientReviews/ClientReviews";
 import HowIWork from "@/components/HowIWork/HowIWork";
 import Copy from "@/components/Copy/Copy";
+import { FaLinkedin } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -33,7 +34,7 @@ export default function Home() {
             </div>
             <div className="hero-tagline">
               <Copy animateOnScroll={false} delay={1}>
-                <p>
+                <p className="lg">
                 Where creative vision meets experienced agency leadership to unlock real growth.
                 </p>
               </Copy>
@@ -93,24 +94,13 @@ export default function Home() {
         <div className="container">
           <div className="about-me-header-callout">
             <Copy delay={0.1}>
-              <h2>About Jordan</h2>
+              <h2>About</h2>
             </Copy>
           </div>
           <div className="about-me-top">
             <div className="about-me-image-section">
               <div className="about-me-image">
                 <img src="/Jordan Warren Square.jpg" alt="About Jordan" />
-              </div>
-              <div className="about-me-name-title">
-                <Copy delay={0.1}>
-                  <h3>Jordan Warren</h3>
-                </Copy>
-                <Copy delay={0.15}>
-                  <p>Founder, Principal Advisor and Fractional CEO</p>
-                </Copy>
-                <Copy delay={0.2}>
-                  <p>Agency C-Suite</p>
-                </Copy>
               </div>
             </div>
             <div className="about-me-main-text">
@@ -119,6 +109,27 @@ export default function Home() {
                   Guiding creative entrepreneurs based on over 25 years of agency leadership.
                 </h1>
               </Copy>
+              <div className="about-me-name-title">
+                <Copy delay={0.15}>
+                  <h3>
+                    Jordan Warren
+                    <a 
+                      href="https://www.linkedin.com/in/jordanwarren" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="linkedin-link"
+                    >
+                      <FaLinkedin className="linkedin-icon" />
+                    </a>
+                  </h3>
+                </Copy>
+                <Copy delay={0.2}>
+                  <p>Founder, Principal Advisor and Fractional CEO</p>
+                </Copy>
+                <Copy delay={0.25}>
+                  <p>Agency C-Suite</p>
+                </Copy>
+              </div>
             </div>
           </div>
           <div className="about-me-bottom">
