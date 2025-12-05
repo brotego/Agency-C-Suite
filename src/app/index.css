@@ -378,6 +378,8 @@
   padding: 10rem 0 4rem 0;
   color: var(--base-500);
   overflow: hidden;
+  z-index: 10;
+  isolation: isolate;
 }
 
 .featured-projects-container .featured-projects-header-callout {
@@ -542,6 +544,8 @@
   color: var(--base-500);
   margin-top: 0;
   margin-bottom: -4rem;
+  z-index: 1;
+  isolation: isolate;
 }
 
 .how-i-work-container .container {

@@ -48,6 +48,7 @@
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
+  position: relative;
 }
 
 .featured-projects .featured-project-card-content-main {
@@ -67,6 +68,23 @@
   font-size: 0.875rem;
   font-weight: 500;
   width: 100%;
+}
+
+/* Desktop: Position "Where We Can Help" on the right, aligned with bottom of description */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card-content-main {
+    position: relative;
+    padding-right: 0;
+  }
+
+  .featured-projects .featured-project-card-info {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    text-align: right;
+    margin: 0;
+  }
 }
 
 .featured-projects .featured-project-card-info p {
@@ -95,6 +113,15 @@
   font-size: 1.125rem;
 }
 
+/* Second card (Grow-up) - smaller description text */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card[data-card-index="1"] .featured-project-card-description p.lg,
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-description p.lg {
+    font-size: 0.9rem !important;
+    line-height: 1.5;
+  }
+}
+
 .featured-projects .featured-project-card-tags-wrapper {
   width: 100%;
   display: flex;
@@ -104,15 +131,37 @@
   padding: 0;
   position: relative;
   gap: 1rem;
+  margin-top: 2rem;
 }
 
 .featured-projects .featured-project-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
   row-gap: var(--tags-row-gap, 0rem);
   width: 100%;
   justify-content: flex-start;
+}
+
+/* Second card (Grow-up) - all bubbles on one line on desktop */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-tags-wrapper {
+    width: auto;
+    min-width: 100%;
+    overflow: visible;
+  }
+  
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-tags {
+    flex-wrap: nowrap;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  /* Financial bubble on 2nd card - make it wider like long-description bubbles */
+  .featured-projects .featured-project-card[data-card-index="1"] .featured-project-card-tags .featured-project-tag-wrapper:first-child .featured-project-tag,
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-tags .featured-project-tag-wrapper:first-child .featured-project-tag {
+    padding: 0.75rem 3rem !important;
+  }
 }
 
 .featured-projects .featured-project-tag-wrapper {
@@ -160,6 +209,7 @@
   top: calc(100% + 0.75rem);
   left: 50%;
   width: var(--tag-width, auto);
+  min-width: var(--tag-width, auto);
   z-index: 10;
   text-align: center;
 }
@@ -170,6 +220,8 @@
   line-height: 1.4;
   margin: 0;
   padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .featured-projects .featured-project-tag-description.long-description p {
@@ -213,6 +265,7 @@
     overflow: visible;
     justify-content: flex-start;
     align-items: flex-start;
+    position: relative !important;
   }
 
   .featured-projects .featured-project-card-inner {
@@ -282,6 +335,7 @@
     max-height: calc(100% - 2rem);
     overflow: hidden;
     align-self: stretch;
+    margin-top: 1.5rem;
   }
 
   .featured-projects .featured-project-card-tags {
@@ -294,8 +348,8 @@
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     gap: 0.5rem;
-    column-gap: 1rem;
-    row-gap: 0.75rem;
+    column-gap: 1.5rem;
+    row-gap: 3rem;
     max-height: 100%;
     overflow: hidden;
     align-content: start;
@@ -369,6 +423,7 @@
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
     width: 100%;
+    row-gap: 2.5rem;
   }
 
   .featured-projects .featured-project-card-title h2 {
@@ -450,6 +505,7 @@
     grid-template-rows: repeat(2, auto);
     grid-auto-flow: column;
     width: 100%;
+    row-gap: 2.5rem;
   }
 
   .featured-projects .featured-project-card-title h2 {
