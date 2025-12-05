@@ -15,6 +15,7 @@ const FeaturedProjects = () => {
     const featuredProjectCards = gsap.utils.toArray(".featured-project-card");
     const isMobile = window.innerWidth <= 1000;
     const resizeHandlers = [];
+    const descriptionResizeHandlers = [];
 
     featuredProjectCards.forEach((featuredProjectCard, cardIndex) => {
       const tags = featuredProjectCard.querySelectorAll(".featured-project-tag");
@@ -24,18 +25,38 @@ const FeaturedProjects = () => {
       const tagsContainer = featuredProjectCard.querySelector(".featured-project-card-tags");
 
       // Set description width to match tag width
-      // Note: Grid will auto-create columns with fixed spacing, no need to calculate
-
-      tagsArray.forEach((tag) => {
-        const tagWrapper = tag.closest(".featured-project-tag-wrapper");
-        if (tagWrapper) {
-          const description = tagWrapper.querySelector(".featured-project-tag-description");
-          if (description) {
-            const tagWidth = tag.offsetWidth;
-            gsap.set(description, { width: tagWidth });
+      const updateDescriptionWidths = () => {
+        tagsArray.forEach((tag) => {
+          const tagWrapper = tag.closest(".featured-project-tag-wrapper");
+          if (tagWrapper) {
+            const description = tagWrapper.querySelector(".featured-project-tag-description");
+            if (description) {
+              // Force a layout recalculation
+              const tagWidth = tag.offsetWidth || tag.getBoundingClientRect().width;
+              if (tagWidth > 0) {
+                gsap.set(description, { width: tagWidth });
+              }
+            }
           }
-        }
-      });
+        });
+      };
+
+      // Update widths after a short delay to ensure layout is ready
+      setTimeout(() => {
+        updateDescriptionWidths();
+      }, 100);
+      
+      // Also update after a longer delay to catch any CSS changes
+      setTimeout(() => {
+        updateDescriptionWidths();
+      }, 500);
+
+      // Also update on window resize
+      const handleDescriptionResize = () => {
+        updateDescriptionWidths();
+      };
+      window.addEventListener("resize", handleDescriptionResize);
+      descriptionResizeHandlers.push(handleDescriptionResize);
 
 
       // Animate row gap when card locks in - start closer, expand as scrolling begins
@@ -82,13 +103,33 @@ const FeaturedProjects = () => {
           
           // Only set up scroll if card extends beyond viewport
           if (horizontalScrollDistance > 0) {
+            // Calculate proper end value to ensure pinSpacing works correctly
+            // Add the card's height to ensure proper spacing for the next section
+            const cardHeight = featuredProjectCard.offsetHeight || featuredProjectCard.getBoundingClientRect().height;
+            const scrollEnd = horizontalScrollDistance;
+            
             ScrollTrigger.create({
               trigger: featuredProjectCard,
               start: "top 15%",
-              end: `+=${horizontalScrollDistance}px`,
+              end: `+=${scrollEnd}px`,
               scrub: true,
               pin: featuredProjectCard,
               pinSpacing: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onEnter: () => {
+                featuredProjectCard.classList.add('is-pinned');
+              },
+              onLeave: () => {
+                // Ensure card is unpinned when scroll ends
+                featuredProjectCard.classList.remove('is-pinned');
+                gsap.set(cardInner, { x: 0 });
+              },
+              onLeaveBack: () => {
+                // Reset when scrolling back up
+                featuredProjectCard.classList.remove('is-pinned');
+                gsap.set(cardInner, { x: 0 });
+              },
               onUpdate: (self) => {
                 const progress = Math.min(1, self.progress); // Clamp to 1
                 // Translate from 0 (left edge) to -horizontalScrollDistance (right edge with padding)
@@ -322,6 +363,9 @@ const FeaturedProjects = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       resizeHandlers.forEach(({ handler }) => {
+        window.removeEventListener("resize", handler);
+      });
+      descriptionResizeHandlers.forEach((handler) => {
         window.removeEventListener("resize", handler);
       });
     };
