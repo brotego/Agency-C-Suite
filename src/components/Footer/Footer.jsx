@@ -40,7 +40,7 @@ const Footer = () => {
               </Copy>
               <Copy delay={0.3}>
                 <p className="footer-section-item footer-linkedin-item">
-                  <a href="https://www.linkedin.com/in/jordanwarren" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.linkedin.com/company/agencyc-suite/" target="_blank" rel="noopener noreferrer">
                     <FaLinkedin className="linkedin-icon" />
                     LinkedIn
                   </a>
@@ -54,7 +54,7 @@ const Footer = () => {
             <p>
               Developed by — <span>Line Labs</span>
             </p>
-            <p>All rights reserverd &copy; 2025</p>
+            <p>All rights reserved &copy; 2026</p>
           </div>
         </div>
       </div>

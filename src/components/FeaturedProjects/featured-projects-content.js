@@ -3,7 +3,7 @@ const featuredProjectsContent = [
     info: "Where We Can Help",
     title: "Start-up",
     description:
-      "Are you just starting your agency and don't know where to begin?",
+      "Are you just starting your agency and don't know where to\u00A0begin?",
     image: "/featured-projects/featured-work-1.jpg",
     tags: [
       { name: "Partner Alignment", description: "Vision, values, purpose, goals" },

@@ -62,9 +62,16 @@ const ClientReviews = () => {
                 </h3>
               </div>
               <div className="client-item-expanded">
-                <div className="client-avatar">
-                  <img src={client.avatar} alt={client.name} />
-                </div>
+                <a 
+                  href={client.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="client-avatar-link"
+                >
+                  <div className="client-avatar">
+                    <img src={client.avatar} alt={client.name} />
+                  </div>
+                </a>
                 <div className="client-info">
                   <p className="client-name">{client.name}</p>
                   <p className="client-title">{client.title}</p>

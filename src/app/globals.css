@@ -18,9 +18,17 @@
   user-select: none;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: "Manrope", sans-serif;
   background-color: #ffffff;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 section,
@@ -133,6 +141,68 @@ span.spacer {
   }
 }
 
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+    letter-spacing: -0.08rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    letter-spacing: -0.04rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    letter-spacing: -0.02rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  p.md {
+    font-size: 1rem;
+  }
+
+  p.lg {
+    font-size: 1.1rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+    letter-spacing: -0.06rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    letter-spacing: -0.03rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    letter-spacing: -0.015rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  p.md {
+    font-size: 0.95rem;
+  }
+
+  p.lg {
+    font-size: 1rem;
+  }
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none !important;
@@ -166,4 +236,10 @@ body.menu-open .menu,
 body.menu-open .menu *,
 body.menu-open .menu-toggle {
   pointer-events: auto;
+}
+
+body.menu-open .top-bar-mobile-overlay,
+body.menu-open .top-bar-mobile-overlay *,
+body.menu-open .top-bar-mobile-overlay-close {
+  pointer-events: auto !important;
 }

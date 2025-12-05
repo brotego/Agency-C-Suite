@@ -60,7 +60,7 @@ export default function Home() {
             <div className="what-we-do-col">
               <Copy delay={0.15}>
                 <p className="lg">
-                  I'm now advising founders of creative agencies as a fractional CEO. Additionally, I've assembled a team of fractional experts with extensive agency experience who can help as needed in areas like Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations & IT.
+                  I'm now advising founders of creative agencies as a fractional CEO. Additionally, I've assembled a team of fractional experts with extensive agency experience who can help as needed in areas like Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations, IT, Mergers & Acquisitions.
                 </p>
               </Copy>
             </div>

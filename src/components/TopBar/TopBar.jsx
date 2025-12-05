@@ -1,25 +1,37 @@
 "use client";
 import "./TopBar.css";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useLayoutEffect, useCallback } from "react";
 
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import SplitText from "gsap/SplitText";
+import { useLenis } from "lenis/react";
 
 import { useViewTransition } from "@/hooks/useViewTransition";
 import AnimatedButton from "../AnimatedButton/AnimatedButton";
+import { IoMdClose } from "react-icons/io";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const TopBar = () => {
   const topBarRef = useRef(null);
   const menuButtonRef = useRef(null);
   const menuLinksRef = useRef(null);
+  const logoRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const { navigateWithTransition } = useViewTransition();
+  const lenis = useLenis();
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuExpanded, setIsMenuExpanded] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isMobileOverlayOpen, setIsMobileOverlayOpen] = useState(false);
+  const [isAnimatingOverlay, setIsAnimatingOverlay] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const isInitializedRef = useRef(false);
+  const isMobileOverlayInitializedRef = useRef(false);
+  const splitTextRefs = useRef([]);
 
   const menuLinks = [
     { label: "What is ACS?", route: "#what-we-do" },
@@ -30,8 +42,195 @@ const TopBar = () => {
     { label: "Get in Touch", route: "#footer" },
   ];
 
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Stop/start lenis when mobile overlay is open
+  useEffect(() => {
+    if (lenis && isMobile) {
+      if (isMobileOverlayOpen) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    }
+  }, [lenis, isMobileOverlayOpen, isMobile]);
+
+  // Initialize mobile overlay animation
+  useLayoutEffect(() => {
+    if (!isMobile) {
+      isInitializedRef.current = false;
+      return;
+    }
+
+    // Small delay to ensure DOM is ready
+    const initTimer = setTimeout(() => {
+      if (!mobileMenuRef.current) return;
+
+      const menu = mobileMenuRef.current;
+
+      splitTextRefs.current.forEach((split) => {
+        if (split?.revert) split.revert();
+      });
+      splitTextRefs.current = [];
+
+      gsap.set(menu, {
+        clipPath: "circle(0% at 50% 50%)",
+      });
+
+      const h2Elements = menu.querySelectorAll("h2");
+
+      h2Elements.forEach((h2) => {
+        const split = SplitText.create(h2, {
+          type: "lines",
+          mask: "lines",
+          linesClass: "split-line",
+        });
+
+        gsap.set(split.lines, { y: "120%" });
+
+        split.lines.forEach((line) => {
+          line.style.pointerEvents = "auto";
+        });
+
+        splitTextRefs.current.push(split);
+      });
+
+      isMobileOverlayInitializedRef.current = true;
+    }, 100);
+
+    return () => {
+      clearTimeout(initTimer);
+    };
+  }, [isMobile]);
+
+  // Animate mobile overlay
+  const animateMobileOverlay = useCallback((open) => {
+    if (!mobileMenuRef.current || !isMobile) return;
+
+    const menu = mobileMenuRef.current;
+    const closeButton = menu.querySelector(".top-bar-mobile-overlay-close");
+    setIsAnimatingOverlay(true);
+
+    if (open) {
+      document.body.classList.add("menu-open");
+
+      menu.style.pointerEvents = "all";
+      
+      // Ensure close button is immediately clickable
+      const closeBtn = menu.querySelector(".top-bar-mobile-overlay-close");
+      if (closeBtn) {
+        closeBtn.style.pointerEvents = "auto";
+      }
+
+      gsap.to(menu, {
+        clipPath: "circle(100% at 50% 50%)",
+        ease: "power3.out",
+        duration: 2,
+        onStart: () => {
+          splitTextRefs.current.forEach((split, index) => {
+            gsap.to(split.lines, {
+              y: "0%",
+              stagger: 0.05,
+              delay: 0.35 + index * 0.1,
+              duration: 1,
+              ease: "power4.out",
+            });
+          });
+          
+          // Animate close button appearing and ensure it's clickable
+          if (closeButton) {
+            closeButton.style.pointerEvents = "auto";
+            gsap.to(closeButton, {
+              opacity: 1,
+              scale: 1,
+              delay: 0.5,
+              duration: 0.5,
+              ease: "power3.out",
+              onComplete: () => {
+                closeButton.style.pointerEvents = "auto";
+              }
+            });
+          }
+        },
+        onComplete: () => {
+          setIsAnimatingOverlay(false);
+          // Ensure close button is always clickable after animation
+          const closeBtn = menu.querySelector(".top-bar-mobile-overlay-close");
+          if (closeBtn) {
+            closeBtn.style.pointerEvents = "auto";
+          }
+        },
+      });
+    } else {
+      const closeButton = menu.querySelector(".top-bar-mobile-overlay-close");
+      
+      // Hide close button first
+      if (closeButton) {
+        gsap.to(closeButton, {
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+      }
+
+      const textTimeline = gsap.timeline({
+        onStart: () => {
+          gsap.to(menu, {
+            clipPath: "circle(0% at 50% 50%)",
+            ease: "power3.out",
+            duration: 1,
+            delay: 0.75,
+            onComplete: () => {
+              menu.style.pointerEvents = "none";
+
+              splitTextRefs.current.forEach((split) => {
+                gsap.set(split.lines, { y: "120%" });
+              });
+
+              document.body.classList.remove("menu-open");
+              setIsAnimatingOverlay(false);
+            },
+          });
+        },
+      });
+
+      splitTextRefs.current.forEach((split, index) => {
+        textTimeline.to(
+          split.lines,
+          {
+            y: "-120%",
+            stagger: 0.03,
+            delay: index * 0.05,
+            duration: 1,
+            ease: "power3.out",
+          },
+          0
+        );
+      });
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isMobileOverlayInitializedRef.current && isMobile) {
+      animateMobileOverlay(isMobileOverlayOpen);
+    }
+  }, [isMobileOverlayOpen, animateMobileOverlay, isMobile]);
+
   useEffect(() => {
     const topBar = topBarRef.current;
+    const logo = logoRef.current;
+    const button = menuButtonRef.current?.querySelector(".btn");
+    const buttonText = button?.querySelector(".button-text");
+    
     if (!topBar) return;
 
     gsap.set(topBar, { y: 0 });
@@ -40,6 +239,8 @@ const TopBar = () => {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY || 0;
+      const icon = button?.querySelector(".icon");
+      const circle = button?.querySelector(".circle");
       
       // Clear any pending timeout
       clearTimeout(scrollTimeout);
@@ -50,21 +251,173 @@ const TopBar = () => {
         if (currentScrollY === 0) {
           setIsMenuExpanded(true);
           setIsMenuOpen(false); // Close click menu when at top
+          
+          // Show logo and expand button
+          if (logo) {
+            gsap.to(logo, {
+              y: 0,
+              opacity: 1,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          }
+          if (button) {
+            gsap.to(button, {
+              width: "10rem",
+              height: "auto",
+              padding: "0.15rem",
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          }
+          if (circle) {
+            gsap.to(circle, {
+              width: "100%",
+              height: "3rem",
+              duration: 0.3,
+              ease: "power2.out",
+              onComplete: () => {
+                // Clear inline width to allow CSS hover to work
+                gsap.set(circle, { clearProps: "width" });
+              },
+            });
+          }
+          if (icon) {
+            gsap.to(icon, {
+              left: "0.95rem",
+              x: 0,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          }
+          if (buttonText) {
+            gsap.to(buttonText, {
+              opacity: 1,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          }
         } else {
           // Collapse for any scroll position beyond 0
           setIsMenuExpanded(false);
+          
+          // Hide logo and shrink button to circle
+          if (logo) {
+            gsap.to(logo, {
+              y: -100,
+              opacity: 0,
+              duration: 0.3,
+              ease: "power2.in",
+            });
+          }
+          if (button) {
+            gsap.to(button, {
+              width: "3rem",
+              height: "3rem",
+              padding: "0",
+              duration: 0.3,
+              ease: "power2.in",
+            });
+          }
+          if (circle) {
+            gsap.to(circle, {
+              width: "3rem",
+              height: "3rem",
+              duration: 0.3,
+              ease: "power2.in",
+              onComplete: () => {
+                // Clear inline width to allow CSS hover to work
+                gsap.set(circle, { clearProps: "width" });
+              },
+            });
+          }
+          if (icon) {
+            // Center the icon when button is shrunk (3rem button - icon width/2)
+            gsap.to(icon, {
+              left: "50%",
+              x: "-50%",
+              duration: 0.3,
+              ease: "power2.in",
+            });
+          }
+          if (buttonText) {
+            gsap.to(buttonText, {
+              opacity: 0,
+              duration: 0.3,
+              ease: "power2.in",
+            });
+          }
         }
       }, 10);
     };
 
     // Check initial scroll position
     const initialScrollY = window.scrollY || 0;
+    const icon = button?.querySelector(".icon");
+    const circle = button?.querySelector(".circle");
+    const isMobile = window.innerWidth <= 768;
+    
+    // Always ensure button is visible on mobile
+    if (isMobile && button) {
+      gsap.set(button, { scale: 1, opacity: 1, visibility: "visible" });
+    }
+    if (isMobile && circle) {
+      gsap.set(circle, { scale: 1, opacity: 1, visibility: "visible" });
+    }
+    if (isMobile && icon) {
+      gsap.set(icon, { opacity: 1, visibility: "visible" });
+    }
+    
     if (initialScrollY === 0) {
       setIsMenuExpanded(true);
       setIsMenuOpen(false);
+      // Set initial state for logo and button
+      if (logo) {
+        gsap.set(logo, { y: 0, opacity: 1 });
+      }
+      if (button) {
+        gsap.set(button, { width: "10rem", height: "auto", padding: "0.15rem" });
+      }
+      if (circle) {
+        gsap.set(circle, { width: "100%", height: "3rem" });
+        // Clear inline width after a brief delay to allow CSS hover
+        setTimeout(() => {
+          gsap.set(circle, { clearProps: "width" });
+        }, 350);
+      }
+      if (icon) {
+        gsap.set(icon, { left: "0.95rem", x: 0 });
+      }
+      if (buttonText) {
+        gsap.set(buttonText, { opacity: 1 });
+      }
     } else {
       setIsMenuExpanded(false);
       setIsMenuOpen(false);
+      // Set initial state for logo and button (hidden/shrunk)
+      if (logo) {
+        gsap.set(logo, { y: -100, opacity: 0 });
+      }
+      if (button) {
+        const buttonWidth = isMobile ? "3rem" : "3rem";
+        gsap.set(button, { width: buttonWidth, height: "3rem", padding: "0" });
+      }
+      if (circle) {
+        gsap.set(circle, { width: "3rem", height: "3rem" });
+        // Clear inline width after a brief delay to allow CSS hover
+        setTimeout(() => {
+          gsap.set(circle, { clearProps: "width" });
+        }, 350);
+      }
+      if (circle) {
+        gsap.set(circle, { width: "3rem" });
+      }
+      if (icon) {
+        gsap.set(icon, { left: "50%", x: "-50%" });
+      }
+      if (buttonText) {
+        gsap.set(buttonText, { opacity: 0 });
+      }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -80,6 +433,55 @@ const TopBar = () => {
       gsap.set(topBarRef.current, { y: 0 });
     }
   });
+
+  // Ensure button is always visible on mobile
+  useEffect(() => {
+    const checkMobileAndEnsureVisible = () => {
+      const isMobile = window.innerWidth <= 768;
+      if (!isMobile) return;
+
+      const button = menuButtonRef.current?.querySelector(".btn");
+      const circle = button?.querySelector(".circle");
+      const icon = button?.querySelector(".icon");
+
+      if (button) {
+        gsap.set(button, { 
+          scale: 1, 
+          opacity: 1, 
+          visibility: "visible",
+          display: "inline-block"
+        });
+      }
+      if (circle) {
+        gsap.set(circle, { 
+          scale: 1, 
+          opacity: 1, 
+          visibility: "visible",
+          width: "3rem",
+          height: "3rem"
+        });
+      }
+      if (icon) {
+        gsap.set(icon, { 
+          opacity: 1, 
+          visibility: "visible",
+          display: "block"
+        });
+      }
+    };
+
+    // Check on mount and resize
+    checkMobileAndEnsureVisible();
+    window.addEventListener("resize", checkMobileAndEnsureVisible);
+
+    // Also check after a short delay to override any animations
+    const timeout = setTimeout(checkMobileAndEnsureVisible, 100);
+
+    return () => {
+      window.removeEventListener("resize", checkMobileAndEnsureVisible);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   // Auto-expand blue circle and show menu on initial load (only if at top of page)
   useEffect(() => {
@@ -207,7 +609,7 @@ const TopBar = () => {
     const icon = button?.querySelector(".icon");
     
     if (isHovered && !isMenuExpanded) {
-      // Expand circle on hover (icon stays centered via CSS positioning)
+      // Expand circle on hover - when collapsed, expand to fill the 3rem button
       if (circle) {
         gsap.to(circle, {
           width: "100%",
@@ -223,6 +625,10 @@ const TopBar = () => {
           width: "3rem",
           duration: 0.3,
           ease: "power2.in",
+          onComplete: () => {
+            // Clear inline width to allow CSS hover to work
+            gsap.set(circle, { clearProps: "width" });
+          },
         });
       }
     }
@@ -285,7 +691,7 @@ const TopBar = () => {
 
   return (
     <div className="top-bar" ref={topBarRef}>
-      <div className="top-bar-logo">
+      <div className="top-bar-logo" ref={logoRef}>
         <a
           href="/"
           onClick={(e) => {
@@ -301,7 +707,10 @@ const TopBar = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="menu-hover-links" ref={menuLinksRef}>
+        <div 
+          className={`menu-hover-links ${isMenuOpen && !isMenuExpanded ? 'mobile-visible' : ''}`}
+          ref={menuLinksRef}
+        >
           {menuLinks.map((link, index) => (
             <a
               key={index}
@@ -309,11 +718,25 @@ const TopBar = () => {
               className="menu-hover-link"
               onClick={(e) => {
                 e.preventDefault();
+                
+                // Close mobile overlay if open
+                if (isMobile && isMobileOverlayOpen) {
+                  setIsMobileOverlayOpen(false);
+                }
+                
+                // Close desktop dropdown if open
+                if (!isMenuExpanded) {
+                  setIsMenuOpen(false);
+                }
+                
                 if (link.route.startsWith("#")) {
                   // Smooth scroll to section
                   const element = document.querySelector(link.route);
                   if (element) {
-                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    // Small delay to allow overlay to start closing
+                    setTimeout(() => {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, isMobile ? 100 : 0);
                   }
                 } else {
                   navigateWithTransition(link.route);
@@ -332,13 +755,72 @@ const TopBar = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              if (!isMenuExpanded) {
-                setIsMenuOpen(!isMenuOpen);
+              
+              // On mobile, open overlay instead of dropdown
+              if (isMobile) {
+                if (!isAnimatingOverlay && isMobileOverlayInitializedRef.current) {
+                  setIsMobileOverlayOpen(!isMobileOverlayOpen);
+                }
+              } else {
+                // Desktop behavior
+                if (!isMenuExpanded) {
+                  setIsMenuOpen(!isMenuOpen);
+                }
               }
             }}
           />
         </div>
       </div>
+      
+      {/* Mobile Overlay */}
+      {isMobile && (
+        <div className="top-bar-mobile-overlay" ref={mobileMenuRef}>
+          <button
+            className="top-bar-mobile-overlay-close"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsMobileOverlayOpen(false);
+            }}
+            aria-label="Close menu"
+            type="button"
+            style={{ pointerEvents: 'auto', zIndex: 1001 }}
+          >
+            <IoMdClose />
+          </button>
+          <div className="top-bar-mobile-overlay-wrapper">
+            <div className="top-bar-mobile-overlay-content">
+              <div className="top-bar-mobile-links">
+                {menuLinks.map((link, index) => (
+                  <div key={index} className="top-bar-mobile-link">
+                    <a
+                      href={link.route}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (isMobileOverlayOpen) {
+                          setIsMobileOverlayOpen(false);
+                        }
+                        if (link.route.startsWith("#")) {
+                          setTimeout(() => {
+                            const element = document.querySelector(link.route);
+                            if (element) {
+                              element.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }
+                          }, 100);
+                        } else {
+                          navigateWithTransition(link.route);
+                        }
+                      }}
+                    >
+                      <h2>{link.label}</h2>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
