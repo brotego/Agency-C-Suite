@@ -580,7 +580,8 @@ const TopBar = () => {
     
     // Only manage menu visibility when scrolling, not on initial load
     // Initial load animation is handled by the auto-expand effect
-    if (!isMenuExpanded) {
+    // Don't hide links if menu is open via click
+    if (!isMenuExpanded && !isMenuOpen) {
       // Kill any ongoing animations on links
       links.forEach(link => {
         gsap.killTweensOf(link);
@@ -641,7 +642,7 @@ const TopBar = () => {
       });
       setIsMenuOpen(false); // Ensure click menu is closed when auto-expanded
     }
-  }, [isMenuExpanded, hasAnimated]);
+  }, [isMenuExpanded, hasAnimated, isMenuOpen]);
 
   // Hover effect: expand blue circle (but don't open menu)
   useEffect(() => {
@@ -684,8 +685,13 @@ const TopBar = () => {
     const links = Array.from(menuLinksRef.current.querySelectorAll(".menu-hover-link"));
     
     if (isMenuOpen && !isMenuExpanded) {
+      // Kill any ongoing animations on links
+      links.forEach(link => {
+        gsap.killTweensOf(link);
+      });
+      
       // Show links when menu is opened via click
-      gsap.set(links, { x: 20, opacity: 0 });
+      gsap.set(links, { x: 20, opacity: 0, pointerEvents: "auto", visibility: "visible" });
       gsap.to(links, {
         x: 0,
         opacity: 1,
