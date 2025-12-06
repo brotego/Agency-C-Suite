@@ -581,13 +581,24 @@ const TopBar = () => {
     // Only manage menu visibility when scrolling, not on initial load
     // Initial load animation is handled by the auto-expand effect
     if (!isMenuExpanded) {
+      // Kill any ongoing animations on links
+      links.forEach(link => {
+        gsap.killTweensOf(link);
+      });
+      
+      // Immediately set pointer-events to none and hide links to prevent glitches
+      links.forEach(link => {
+        gsap.set(link, { pointerEvents: "none", visibility: "hidden" });
+      });
+      
       // Hide links when menu is collapsed
       gsap.to(links, {
         x: 20,
         opacity: 0,
-        duration: 0.3,
-        stagger: 0.03,
+        duration: 0.15,
+        stagger: 0.01,
         ease: "power2.in",
+        immediateRender: true,
       });
       // Reset circle width when collapsed - use clearProps to let CSS hover work
       if (circle) {
@@ -602,6 +613,11 @@ const TopBar = () => {
         });
       }
     } else if (hasAnimated && isMenuExpanded) {
+      // Kill any ongoing animations on links
+      links.forEach(link => {
+        gsap.killTweensOf(link);
+      });
+      
       // When expanding again after initial animation (at top of page), expand circle and show links
       if (circle) {
         gsap.to(circle, {
@@ -614,6 +630,8 @@ const TopBar = () => {
       gsap.to(links, {
         x: 0,
         opacity: 1,
+        visibility: "visible",
+        pointerEvents: "auto",
         duration: 0.5,
         stagger: {
           amount: 0.2,
@@ -679,13 +697,24 @@ const TopBar = () => {
         ease: "power3.out",
       });
     } else if (!isMenuOpen && !isMenuExpanded) {
+      // Kill any ongoing animations on links
+      links.forEach(link => {
+        gsap.killTweensOf(link);
+      });
+      
+      // Immediately hide links when menu is closed to prevent glitches
+      links.forEach(link => {
+        gsap.set(link, { pointerEvents: "none", visibility: "hidden" });
+      });
+      
       // Hide links when menu is closed
       gsap.to(links, {
         x: 20,
         opacity: 0,
-        duration: 0.3,
-        stagger: 0.03,
+        duration: 0.15,
+        stagger: 0.01,
         ease: "power2.in",
+        immediateRender: true,
       });
     }
   }, [isMenuOpen, isMenuExpanded]);
