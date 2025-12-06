@@ -8,10 +8,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const HowIWork = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [visibleDescriptions, setVisibleDescriptions] = useState(new Set());
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
   const bubblesRef = useRef(null);
   const titleRef = useRef(null);
   const lastProgressRef = useRef(0);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 1000);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1000);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const workMethods = [
     {
@@ -28,7 +39,7 @@ const HowIWork = () => {
     },
     {
       title: "Referral",
-      description: "Connect you with fractional agency experts in Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations & IT",
+      description: "Connect you with fractional agency experts in Finance, Legal, Recruiting, HR, New Business, Marketing, PR, Operations, IT, Mergers & Acquisitions",
     },
   ];
 
@@ -41,8 +52,29 @@ const HowIWork = () => {
     const bubbleElements = gsap.utils.toArray(".how-i-work-bubble");
     const totalBubbles = bubbleElements.length;
     const scrollDistance = totalBubbles * 200; // 200vh per bubble for slower, smoother fill
+    const isMobile = window.innerWidth <= 1000;
 
-    // Initialize all bubbles to dark text color before scrolling starts
+    // On mobile, set all bubbles to completed state (no animation)
+    if (isMobile) {
+      setActiveIndex(totalBubbles - 1); // Set last bubble as active
+      setVisibleDescriptions(new Set(Array.from({ length: totalBubbles }, (_, i) => i))); // Show all descriptions
+      
+      bubbleElements.forEach((bubble, index) => {
+        const circle = bubble.querySelector(".how-i-work-bubble-circle");
+        const h3 = bubble.querySelector("h3");
+        if (circle) {
+          gsap.set(circle, { width: "100%" }); // All bubbles filled
+        }
+        if (h3) {
+          gsap.set(h3, { color: "#ffffff" }); // White text (completed state)
+        }
+      });
+      
+      // Don't set up ScrollTrigger on mobile
+      return;
+    }
+
+    // Initialize all bubbles to dark text color before scrolling starts (desktop only)
     bubbleElements.forEach((bubble) => {
       const h3 = bubble.querySelector("h3");
       if (h3) {
@@ -50,21 +82,26 @@ const HowIWork = () => {
       }
     });
 
-    // Pin the section
+    // Pin the section (desktop only)
     const pinTrigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: `+=${scrollDistance}vh`,
       pin: section,
       pinSpacing: true,
+      anticipatePin: 0,
+      id: "how-we-work-pin",
+      invalidateOnRefresh: true,
     });
 
-    // Update active index and animate bubbles based on scroll progress
-    ScrollTrigger.create({
+    // Update active index and animate bubbles based on scroll progress (desktop only)
+    const animateTrigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: `+=${scrollDistance}vh`,
-      scrub: 2, // Smoother scrubbing with lag
+      scrub: 2,
+      id: "how-we-work-animate",
+      invalidateOnRefresh: true,
       onUpdate: (self) => {
         const progress = self.progress;
         const newIndex = Math.min(
@@ -161,9 +198,10 @@ const HowIWork = () => {
             }
           }
           
-          // Animate bubble scale and border smoothly
+          // Animate bubble scale and border smoothly (skip scale on mobile)
+          const isMobile = window.innerWidth <= 1000;
           gsap.to(bubble, {
-            scale: isActive ? 1.1 : 1,
+            scale: isMobile ? 1 : (isActive ? 1.1 : 1),
             borderColor: isActive ? "var(--base-300)" : "var(--base-400)",
             duration: 0.5,
             ease: "power2.out",
@@ -177,7 +215,14 @@ const HowIWork = () => {
     // Title is now centered, no positioning needed
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      // Only kill ScrollTriggers that belong to How We Work
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerId = trigger.vars?.id || "";
+        const triggerElement = trigger.trigger || trigger.vars?.trigger;
+        if (triggerId.includes("how-we-work") || triggerElement === section) {
+          trigger.kill();
+        }
+      });
     };
   }, []);
 
@@ -192,14 +237,14 @@ const HowIWork = () => {
           {workMethods.map((method, index) => (
             <div key={index} className="how-i-work-bubble-wrapper">
               <div 
-                className={`how-i-work-bubble ${index === activeIndex ? "active" : ""}`}
+                className={`how-i-work-bubble ${index === activeIndex ? "active" : ""} ${isMobile ? "mobile-completed" : ""}`}
               >
                 <span className="how-i-work-bubble-circle"></span>
                 <Copy delay={0.1 + index * 0.05}>
                   <h3>{method.title}</h3>
                 </Copy>
               </div>
-              <div className={`how-i-work-bubble-description ${visibleDescriptions.has(index) ? "active" : ""}`}>
+              <div className={`how-i-work-bubble-description ${isMobile || visibleDescriptions.has(index) ? "active" : ""}`}>
                 <p>{method.description}</p>
               </div>
             </div>

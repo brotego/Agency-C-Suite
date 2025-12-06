@@ -37,7 +37,7 @@
 .client-reviews .client-review-copy h3 {
   text-align: left;
   font-size: 1.75rem;
-  color: #0f07d2;
+  color: #253a87;
   line-height: 1.25;
   position: relative;
   padding: 0.25rem 0 0.5rem 0;
@@ -52,14 +52,14 @@
   top: 0;
   left: 0;
   font-size: 4rem;
-  color: #0f07d2;
+  color: #253a87;
   opacity: 0.5;
   line-height: 1;
 }
 
 .client-reviews .client-review-copy h3 .closing-quote {
   font-size: 4rem;
-  color: #0f07d2;
+  color: #253a87;
   opacity: 0.5;
   display: inline-block;
   line-height: 0;
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background-color: #0f07d2;
+  background-color: #253a87;
   border-radius: 0.5rem;
   padding: 0.75rem;
   width: 100%;

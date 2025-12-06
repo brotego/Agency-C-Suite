@@ -235,30 +235,54 @@ const TopBar = () => {
 
     gsap.set(topBar, { y: 0 });
 
-    let scrollTimeout;
+    let lastScrollY = window.scrollY || 0;
+    let scrollDirection = 0; // 0 = no change, 1 = down, -1 = up
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY || 0;
-      const icon = button?.querySelector(".icon");
-      const circle = button?.querySelector(".circle");
+      const scrollIcon = button?.querySelector(".icon");
+      const scrollCircle = button?.querySelector(".circle");
       
-      // Clear any pending timeout
-      clearTimeout(scrollTimeout);
+      // Determine scroll direction
+      if (currentScrollY > lastScrollY) {
+        scrollDirection = 1; // Scrolling down
+      } else if (currentScrollY < lastScrollY) {
+        scrollDirection = -1; // Scrolling up
+      }
+      lastScrollY = currentScrollY;
       
-      // Use a minimal debounce to prevent rapid state changes
-      scrollTimeout = setTimeout(() => {
-        // Only expand when scrolled completely to the top (exactly 0)
-        if (currentScrollY === 0) {
+      // Show logo when scrolling up (but not when at top, handled separately)
+      if (scrollDirection === -1 && currentScrollY > 0) {
+        // Show logo when scrolling up
+        if (logo) {
+          gsap.to(logo, {
+            y: 0,
+            duration: 0.6,
+            ease: "power4.out",
+          });
+        }
+      }
+      
+      // Expand button and show logo only when at top
+      if (currentScrollY <= 1) { // Use <= 1 to catch cases where it might be slightly above 0 due to browser rounding
+        // Check if button is already expanded by checking its current width
+        const currentButtonWidth = button ? parseFloat(window.getComputedStyle(button).width) : 0;
+        const isButtonExpanded = currentButtonWidth > 50; // Button is expanded if wider than 50px
+        
+        if (!isButtonExpanded) {
+          const isMobile = window.innerWidth <= 768;
+          const buttonDuration = isMobile ? 0.3 : 0.15; // Faster on desktop
+          const buttonEase = isMobile ? "power2.out" : "power3.out";
+          
           setIsMenuExpanded(true);
           setIsMenuOpen(false); // Close click menu when at top
           
-          // Show logo and expand button
+          // Show logo at top
           if (logo) {
             gsap.to(logo, {
               y: 0,
-              opacity: 1,
-              duration: 0.3,
-              ease: "power2.out",
+              duration: 0.6,
+              ease: "power4.out",
             });
           }
           if (button) {
@@ -266,48 +290,53 @@ const TopBar = () => {
               width: "10rem",
               height: "auto",
               padding: "0.15rem",
-              duration: 0.3,
-              ease: "power2.out",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
-          if (circle) {
-            gsap.to(circle, {
+          if (scrollCircle) {
+            gsap.to(scrollCircle, {
               width: "100%",
               height: "3rem",
-              duration: 0.3,
-              ease: "power2.out",
+              duration: buttonDuration,
+              ease: buttonEase,
               onComplete: () => {
                 // Clear inline width to allow CSS hover to work
-                gsap.set(circle, { clearProps: "width" });
+                gsap.set(scrollCircle, { clearProps: "width" });
               },
             });
           }
-          if (icon) {
-            gsap.to(icon, {
+          if (scrollIcon) {
+            gsap.to(scrollIcon, {
               left: "0.95rem",
               x: 0,
-              duration: 0.3,
-              ease: "power2.out",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
           if (buttonText) {
             gsap.to(buttonText, {
               opacity: 1,
-              duration: 0.3,
-              ease: "power2.out",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
-        } else {
-          // Collapse for any scroll position beyond 0
+        }
+      } else if (scrollDirection === 1 && currentScrollY > 0) {
+        // Hide logo when scrolling down (and not at top)
+        if (currentScrollY > 50) { // Only hide after scrolling down a bit
           setIsMenuExpanded(false);
           
-          // Hide logo and shrink button to circle
+          const isMobile = window.innerWidth <= 768;
+          const buttonDuration = isMobile ? 0.3 : 0.15; // Faster on desktop
+          const buttonEase = isMobile ? "power2.in" : "power3.out";
+          
+          // Hide logo - scroll up like text animation
           if (logo) {
             gsap.to(logo, {
-              y: -100,
-              opacity: 0,
-              duration: 0.3,
-              ease: "power2.in",
+              y: "-150%",
+              duration: 0.6,
+              ease: "power4.out",
             });
           }
           if (button) {
@@ -315,57 +344,57 @@ const TopBar = () => {
               width: "3rem",
               height: "3rem",
               padding: "0",
-              duration: 0.3,
-              ease: "power2.in",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
-          if (circle) {
-            gsap.to(circle, {
+          if (scrollCircle) {
+            gsap.to(scrollCircle, {
               width: "3rem",
               height: "3rem",
-              duration: 0.3,
-              ease: "power2.in",
+              duration: buttonDuration,
+              ease: buttonEase,
               onComplete: () => {
                 // Clear inline width to allow CSS hover to work
-                gsap.set(circle, { clearProps: "width" });
+                gsap.set(scrollCircle, { clearProps: "width" });
               },
             });
           }
-          if (icon) {
+          if (scrollIcon) {
             // Center the icon when button is shrunk (3rem button - icon width/2)
-            gsap.to(icon, {
+            gsap.to(scrollIcon, {
               left: "50%",
               x: "-50%",
-              duration: 0.3,
-              ease: "power2.in",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
           if (buttonText) {
             gsap.to(buttonText, {
               opacity: 0,
-              duration: 0.3,
-              ease: "power2.in",
+              duration: buttonDuration,
+              ease: buttonEase,
             });
           }
         }
-      }, 10);
+      }
     };
 
     // Check initial scroll position
     const initialScrollY = window.scrollY || 0;
-    const icon = button?.querySelector(".icon");
-    const circle = button?.querySelector(".circle");
+    const initIcon = button?.querySelector(".icon");
+    const initCircle = button?.querySelector(".circle");
     const isMobile = window.innerWidth <= 768;
     
     // Always ensure button is visible on mobile
     if (isMobile && button) {
       gsap.set(button, { scale: 1, opacity: 1, visibility: "visible" });
     }
-    if (isMobile && circle) {
-      gsap.set(circle, { scale: 1, opacity: 1, visibility: "visible" });
+    if (isMobile && initCircle) {
+      gsap.set(initCircle, { scale: 1, opacity: 1, visibility: "visible" });
     }
-    if (isMobile && icon) {
-      gsap.set(icon, { opacity: 1, visibility: "visible" });
+    if (isMobile && initIcon) {
+      gsap.set(initIcon, { opacity: 1, visibility: "visible" });
     }
     
     if (initialScrollY === 0) {
@@ -373,20 +402,20 @@ const TopBar = () => {
       setIsMenuOpen(false);
       // Set initial state for logo and button
       if (logo) {
-        gsap.set(logo, { y: 0, opacity: 1 });
+        gsap.set(logo, { y: 0 });
       }
       if (button) {
         gsap.set(button, { width: "10rem", height: "auto", padding: "0.15rem" });
       }
-      if (circle) {
-        gsap.set(circle, { width: "100%", height: "3rem" });
+      if (initCircle) {
+        gsap.set(initCircle, { width: "100%", height: "3rem" });
         // Clear inline width after a brief delay to allow CSS hover
         setTimeout(() => {
-          gsap.set(circle, { clearProps: "width" });
+          gsap.set(initCircle, { clearProps: "width" });
         }, 350);
       }
-      if (icon) {
-        gsap.set(icon, { left: "0.95rem", x: 0 });
+      if (initIcon) {
+        gsap.set(initIcon, { left: "0.95rem", x: 0 });
       }
       if (buttonText) {
         gsap.set(buttonText, { opacity: 1 });
@@ -396,24 +425,21 @@ const TopBar = () => {
       setIsMenuOpen(false);
       // Set initial state for logo and button (hidden/shrunk)
       if (logo) {
-        gsap.set(logo, { y: -100, opacity: 0 });
+        gsap.set(logo, { y: "-150%" });
       }
       if (button) {
         const buttonWidth = isMobile ? "3rem" : "3rem";
         gsap.set(button, { width: buttonWidth, height: "3rem", padding: "0" });
       }
-      if (circle) {
-        gsap.set(circle, { width: "3rem", height: "3rem" });
+      if (initCircle) {
+        gsap.set(initCircle, { width: "3rem", height: "3rem" });
         // Clear inline width after a brief delay to allow CSS hover
         setTimeout(() => {
-          gsap.set(circle, { clearProps: "width" });
+          gsap.set(initCircle, { clearProps: "width" });
         }, 350);
       }
-      if (circle) {
-        gsap.set(circle, { width: "3rem" });
-      }
-      if (icon) {
-        gsap.set(icon, { left: "50%", x: "-50%" });
+      if (initIcon) {
+        gsap.set(initIcon, { left: "50%", x: "-50%" });
       }
       if (buttonText) {
         gsap.set(buttonText, { opacity: 0 });
@@ -424,7 +450,6 @@ const TopBar = () => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
     };
   }, []);
 

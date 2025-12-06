@@ -31,7 +31,7 @@
   top: 0;
   left: 0;
   font-size: 3.5rem;
-  color: #0f07d2;
+  color: #253a87;
   margin: 0 0 1rem 0;
   white-space: nowrap;
   font-weight: 550;
@@ -119,7 +119,7 @@
   left: 0;
   width: 0;
   height: 100%;
-  background: #0f07d2;
+  background: #253a87;
   border-radius: 4rem;
   z-index: 0;
   will-change: width;
@@ -143,7 +143,7 @@
   font-size: 1.25rem;
   font-weight: 400;
   margin: 0;
-  color: #0f07d2;
+  color: #253a87;
   white-space: nowrap;
   position: relative;
   z-index: 1;
@@ -165,7 +165,8 @@
 @media (max-width: 1000px) {
   .how-i-work {
     min-height: auto;
-    padding: 2rem 0;
+    padding: 0;
+    margin-top: -2rem;
   }
 
   .how-i-work-content {
@@ -174,6 +175,9 @@
 
   .how-i-work-bubble-description {
     max-width: 100%;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
   }
 
   .how-i-work-bubbles {
@@ -188,6 +192,20 @@
 
   .how-i-work-bubble {
     padding: 1rem 0.75rem;
+  }
+
+  .how-i-work-bubble.active,
+  .how-i-work-bubble.mobile-completed {
+    transform: scale(1);
+    border-color: var(--base-300);
+  }
+
+  .how-i-work-bubble.mobile-completed .how-i-work-bubble-circle {
+    width: 100% !important;
+  }
+
+  .how-i-work-bubble.mobile-completed h3 {
+    color: #ffffff !important;
   }
 
   .how-i-work-bubble h3 {

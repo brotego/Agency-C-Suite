@@ -24,198 +24,156 @@ const FeaturedProjects = () => {
       const scrollDistance = totalTags * 150;
       const tagsContainer = featuredProjectCard.querySelector(".featured-project-card-tags");
 
-      // Set description width to match tag width
-      const updateDescriptionWidths = () => {
+      // Desktop-only setup for tag animations and descriptions
+      if (!isMobile) {
+        // Set description width to match tag width
+        const updateDescriptionWidths = () => {
+          tagsArray.forEach((tag) => {
+            const tagWrapper = tag.closest(".featured-project-tag-wrapper");
+            if (tagWrapper) {
+              const description = tagWrapper.querySelector(".featured-project-tag-description");
+              if (description) {
+                // Force a layout recalculation
+                const tagWidth = tag.offsetWidth || tag.getBoundingClientRect().width;
+                if (tagWidth > 0) {
+                  gsap.set(description, {
+                    width: tagWidth,
+                    left: "50%",
+                    xPercent: -50
+                  });
+                }
+              }
+            }
+          });
+        };
+
+        // Initialize all descriptions to be centered
         tagsArray.forEach((tag) => {
           const tagWrapper = tag.closest(".featured-project-tag-wrapper");
           if (tagWrapper) {
             const description = tagWrapper.querySelector(".featured-project-tag-description");
             if (description) {
-              // Force a layout recalculation
-              const tagWidth = tag.offsetWidth || tag.getBoundingClientRect().width;
-              if (tagWidth > 0) {
-                gsap.set(description, { width: tagWidth });
-              }
+              gsap.set(description, { 
+                left: "50%",
+                xPercent: -50,
+                y: 10,
+                opacity: 0
+              });
             }
           }
         });
-      };
 
-      // Update widths after a short delay to ensure layout is ready
-      setTimeout(() => {
-        updateDescriptionWidths();
-      }, 100);
-      
-      // Also update after a longer delay to catch any CSS changes
-      setTimeout(() => {
-        updateDescriptionWidths();
-      }, 500);
+        // Update widths after a short delay to ensure layout is ready
+        setTimeout(() => {
+          updateDescriptionWidths();
+        }, 100);
+        
+        // Also update after a longer delay to catch any CSS changes
+        setTimeout(() => {
+          updateDescriptionWidths();
+        }, 500);
 
-      // Also update on window resize
-      const handleDescriptionResize = () => {
-        updateDescriptionWidths();
-      };
-      window.addEventListener("resize", handleDescriptionResize);
-      descriptionResizeHandlers.push(handleDescriptionResize);
+        // Also update on window resize
+        const handleDescriptionResize = () => {
+          updateDescriptionWidths();
+        };
+        window.addEventListener("resize", handleDescriptionResize);
+        descriptionResizeHandlers.push(handleDescriptionResize);
 
-
-      // Animate row gap when card locks in - start closer, expand as scrolling begins
-      if (tagsContainer) {
-        gsap.set(tagsContainer, { "--tags-row-gap": "0rem" });
-        gsap.to(tagsContainer, {
-          "--tags-row-gap": "4rem",
-          scrollTrigger: {
-            trigger: featuredProjectCard,
-            start: "top 15%",
-            end: "+=200",
-            scrub: true,
-          },
-        });
+        // Animate row gap when card locks in - start closer, expand as scrolling begins
+        if (tagsContainer) {
+          gsap.set(tagsContainer, { "--tags-row-gap": "0rem" });
+          gsap.to(tagsContainer, {
+            "--tags-row-gap": "4rem",
+            scrollTrigger: {
+              trigger: featuredProjectCard,
+              start: "top 15%",
+              end: "+=200",
+              scrub: true,
+            },
+          });
+        }
       }
 
       if (isMobile) {
-        // Mobile: Horizontal scroll behavior - scroll the entire blue card
-        const cardInner = featuredProjectCard.querySelector(".featured-project-card-inner");
+        // Mobile: Pin card and allow horizontal scrolling of numbered items
+        const mobileList = featuredProjectCard.querySelector(".featured-project-mobile-list");
         
-        // Function to calculate and set up horizontal scroll
-        const setupHorizontalScroll = () => {
-          if (!cardInner) return;
+        // Function to calculate and set up mobile pinning with horizontal scroll
+        const setupMobilePin = () => {
+          if (!mobileList) return;
           
-          // Force a layout recalculation
+          // Get the mobile list items
+          const mobileItems = mobileList.querySelectorAll(".featured-project-mobile-item");
+          if (mobileItems.length === 0) return;
+          
+          // Reset transform
+          gsap.set(mobileList, { x: 0 });
+          
+          // Calculate total width of all items including gaps
+          let totalWidth = 0;
+          mobileItems.forEach((item, index) => {
+            const itemWidth = item.getBoundingClientRect().width;
+            totalWidth += itemWidth;
+            if (index < mobileItems.length - 1) {
+              totalWidth += 32; // 32px for gap (2rem)
+            }
+          });
+          
+          // Get viewport width
           const viewportWidth = window.innerWidth;
-          // Use getBoundingClientRect to get the actual width including all content
-          const cardInnerRect = cardInner.getBoundingClientRect();
-          const cardInnerWidth = cardInnerRect.width;
           
-          // Get the padding from the container (1rem = 16px typically, but let's get it dynamically)
-          const featuredProjectsContainer = featuredProjectCard.closest(".featured-projects");
-          const containerPadding = featuredProjectsContainer 
-            ? parseFloat(getComputedStyle(featuredProjectsContainer).paddingLeft) || 16
-            : 16;
+          // Get container padding
+          const containerPadding = 32; // 2rem on each side
           
-          // Calculate scroll distance to show same padding on right as on left
-          // We want the card to scroll until its right edge is at viewport edge - padding
-          // Add double the padding to ensure we see white space on the right
-          const horizontalScrollDistance = Math.max(0, cardInnerWidth - viewportWidth + (containerPadding * 2));
+          // Calculate scroll distance (how much we can scroll horizontally)
+          // We want to scroll until the last item's right edge aligns with viewport right edge
+          const horizontalScrollDistance = Math.max(0, totalWidth - viewportWidth + containerPadding);
           
-          // Set initial position to left edge (x: 0)
-          gsap.set(cardInner, { x: 0 });
+          // Calculate vertical scroll distance needed - use viewport height as base
+          // This gives us enough scroll distance to smoothly scroll through all items
+          const verticalScrollDistance = Math.max(window.innerHeight * 0.5, horizontalScrollDistance * 2);
           
-          // Only set up scroll if card extends beyond viewport
+          // Only set up pin if content extends beyond viewport
           if (horizontalScrollDistance > 0) {
-            // Calculate proper end value to ensure pinSpacing works correctly
-            // Add the card's height to ensure proper spacing for the next section
-            const cardHeight = featuredProjectCard.offsetHeight || featuredProjectCard.getBoundingClientRect().height;
-            const scrollEnd = horizontalScrollDistance;
-            
             ScrollTrigger.create({
               trigger: featuredProjectCard,
-              start: "top 15%",
-              end: `+=${scrollEnd}px`,
+              start: "top top",
+              end: `+=${verticalScrollDistance}px`,
               scrub: true,
-              pin: featuredProjectCard,
+              pin: true,
               pinSpacing: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
+              anticipatePin: 0,
+              invalidateOnRefresh: false,
+              markers: false,
+              id: `featured-project-mobile-${cardIndex}`,
               onEnter: () => {
                 featuredProjectCard.classList.add('is-pinned');
               },
               onLeave: () => {
-                // Ensure card is unpinned when scroll ends
                 featuredProjectCard.classList.remove('is-pinned');
-                gsap.set(cardInner, { x: 0 });
+                gsap.set(mobileList, { x: -horizontalScrollDistance });
               },
               onLeaveBack: () => {
-                // Reset when scrolling back up
                 featuredProjectCard.classList.remove('is-pinned');
-                gsap.set(cardInner, { x: 0 });
+                gsap.set(mobileList, { x: 0 });
               },
               onUpdate: (self) => {
-                const progress = Math.min(1, self.progress); // Clamp to 1
-                // Translate from 0 (left edge) to -horizontalScrollDistance (right edge with padding)
+                const progress = Math.min(1, Math.max(0, self.progress));
+                // Animate the horizontal scroll of the mobile list
                 const translateX = -progress * horizontalScrollDistance;
-                
-                // Translate the entire blue card, not just the content
-                gsap.set(cardInner, {
+                gsap.set(mobileList, {
                   x: translateX,
-                });
-
-                // Animate tags as we scroll horizontally
-                tagsArray.forEach((tag, tagIndex) => {
-                  const tagWrapper = tag.closest(".featured-project-tag-wrapper");
-                  if (!tagWrapper) return;
-
-                  const description = tagWrapper.querySelector(".featured-project-tag-description");
-                  
-                  // Calculate when each tag should animate based on horizontal position
-                  const tagStart = tagIndex / totalTags;
-                  const tagEnd = (tagIndex + 1) / totalTags;
-                  
-                  let fillProgress = 0;
-                  if (progress >= tagEnd) {
-                    fillProgress = 1;
-                  } else if (progress >= tagStart) {
-                    const range = tagEnd - tagStart;
-                    const positionInRange = progress - tagStart;
-                    fillProgress = Math.min(1, positionInRange / range);
-                  }
-
-                  // Animate bubble from transparent/border to white/blue
-                  const bgOpacity = fillProgress;
-                  
-                  // Text: light grey to blue
-                  const textR = gsap.utils.interpolate(242, 38, fillProgress);
-                  const textG = gsap.utils.interpolate(237, 56, fillProgress);
-                  const textB = gsap.utils.interpolate(230, 134, fillProgress);
-
-                  const borderOpacity = gsap.utils.interpolate(1, 0, fillProgress);
-
-                  if (fillProgress > 0) {
-                    gsap.set(tag, {
-                      backgroundColor: `rgba(255, 255, 255, ${bgOpacity})`,
-                      borderColor: `rgba(102, 95, 86, ${borderOpacity})`,
-                    });
-                  } else {
-                    gsap.set(tag, {
-                      backgroundColor: "transparent",
-                      borderColor: "var(--base-400)",
-                    });
-                  }
-
-                  const h3 = tag.querySelector("h3");
-                  if (h3) {
-                    gsap.set(h3, {
-                      color: `rgb(${Math.round(textR)}, ${Math.round(textG)}, ${Math.round(textB)})`,
-                    });
-                  }
-
-                  if (description) {
-                    if (fillProgress > 0.5) {
-                      gsap.to(description, {
-                        opacity: 1,
-                        xPercent: -50,
-                        y: 0,
-                        duration: 0.3,
-                      });
-                    } else {
-                      gsap.to(description, {
-                        opacity: 0,
-                        xPercent: -50,
-                        y: 10,
-                        duration: 0.3,
-                      });
-                    }
-                  }
                 });
               },
             });
           }
         };
 
-        // Wait for layout to be ready, then set up scroll
+        // Initial setup with delay to ensure layout is ready
         setTimeout(() => {
-          setupHorizontalScroll();
-        }, 100);
+          setupMobilePin();
+        }, 300);
 
         // Also set up on window resize
         const handleResize = () => {
@@ -227,11 +185,11 @@ const FeaturedProjects = () => {
             }
           });
           // Reset transform
-          if (cardInner) {
-            gsap.set(cardInner, { x: 0 });
+          if (mobileList) {
+            gsap.set(mobileList, { x: 0 });
           }
           setTimeout(() => {
-            setupHorizontalScroll();
+            setupMobilePin();
           }, 100);
         };
 
@@ -297,6 +255,7 @@ const FeaturedProjects = () => {
               }
 
               if (description) {
+                // Always maintain centering with xPercent, animate y position
                 if (fillProgress > 0.5) {
                   gsap.to(description, {
                     opacity: 1,
@@ -361,7 +320,14 @@ const FeaturedProjects = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      // Only kill ScrollTriggers that belong to FeaturedProjects
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerElement = trigger.trigger || trigger.vars?.trigger;
+        const isFeaturedProjectTrigger = featuredProjectCards.some(card => triggerElement === card);
+        if (isFeaturedProjectTrigger) {
+          trigger.kill();
+        }
+      });
       resizeHandlers.forEach(({ handler }) => {
         window.removeEventListener("resize", handler);
       });
@@ -388,9 +354,9 @@ const FeaturedProjects = () => {
                       <p className="lg">{project.description2}</p>
                     )}
                   </div>
-                  <div className="featured-project-card-info">
-                    <p>Where We Can Help</p>
-                  </div>
+                </div>
+                <div className="featured-project-card-info">
+                  <p>Where We Can Help:</p>
                 </div>
                 <div className="featured-project-card-tags-wrapper">
                   <div className="featured-project-card-tags">
@@ -405,6 +371,18 @@ const FeaturedProjects = () => {
                       </div>
                     ))}
                   </div>
+                </div>
+                {/* Mobile layout: numbered list */}
+                <div className="featured-project-mobile-list">
+                  {project.tags.map((tag, tagIndex) => (
+                    <div key={tagIndex} className="featured-project-mobile-item">
+                      <div className="featured-project-mobile-item-number">{tagIndex + 1}</div>
+                      <div className="featured-project-mobile-item-content">
+                        <h3 className="featured-project-mobile-item-title">{tag.name}</h3>
+                        <p className="featured-project-mobile-item-description">{tag.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

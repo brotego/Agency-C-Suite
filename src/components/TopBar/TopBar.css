@@ -57,7 +57,7 @@
 }
 
 .menu-hover-link {
-  color: #0f07d2;
+  color: #253a87;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -207,9 +207,9 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 1px solid #0f07d2;
+  border: 1px solid #253a87;
   border-radius: 50%;
-  color: #0f07d2;
+  color: #253a87;
   cursor: pointer;
   z-index: 1001;
   pointer-events: auto !important;
@@ -222,10 +222,10 @@
 }
 
 .top-bar-mobile-overlay-close:hover {
-  background-color: #0f07d2;
+  background-color: #253a87;
   color: #ffffff;
   transform: scale(1.1) !important;
-  border-color: #0f07d2;
+  border-color: #253a87;
 }
 
 .top-bar-mobile-overlay-close:active {
@@ -273,12 +273,12 @@
 
 .top-bar-mobile-link a {
   text-decoration: none;
-  color: #0f07d2;
+  color: #253a87;
 }
 
 .top-bar-mobile-link a h2 {
   text-decoration: none;
-  color: #0f07d2;
+  color: #253a87;
   font-size: 2.5rem;
   line-height: 1.1;
   font-weight: 500;

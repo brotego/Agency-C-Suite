@@ -141,8 +141,6 @@ export default function Home() {
                   </p>
                 </Copy>
               </div>
-            </div>
-            <div className="about-me-bottom-right">
               <div className="about-me-bottom-col">
                 <Copy delay={0.2}>
                   <p>
@@ -150,6 +148,8 @@ export default function Home() {
                   </p>
                 </Copy>
               </div>
+            </div>
+            <div className="about-me-bottom-right">
               <div className="about-me-bottom-col">
                 <Copy delay={0.25}>
                   <p>
