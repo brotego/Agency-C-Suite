@@ -137,6 +137,12 @@
     font-size: 0.9rem !important;
     line-height: 1.5;
   }
+  
+  /* Keep description2 on one line */
+  .featured-projects .featured-project-card[data-card-index="1"] .featured-project-card-description p.lg:last-child,
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-description p.lg:last-child {
+    white-space: nowrap;
+  }
 }
 
 .featured-projects .featured-project-card-tags-wrapper {
@@ -349,6 +355,12 @@
   .featured-projects .featured-project-card-description {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
+  }
+  
+  /* Keep description2 on one line on mobile */
+  .featured-projects .featured-project-card[data-card-index="1"] .featured-project-card-description p.lg:last-child,
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-card-description p.lg:last-child {
+    white-space: nowrap;
   }
 
   .featured-projects .featured-project-card-info {
