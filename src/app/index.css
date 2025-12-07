@@ -207,7 +207,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 5rem;
+  gap: 2rem;
   position: relative;
   justify-content: space-between;
 }
@@ -393,7 +393,7 @@
 .featured-projects-container {
   position: relative;
   width: 100%;
-  padding: 10rem 0 4rem 0;
+  padding: 10rem 0 0rem 0;
   color: var(--base-500);
   overflow: hidden;
 }
@@ -438,7 +438,7 @@
 
 @media (max-width: 768px) {
   .featured-projects-container {
-    padding: 6rem 0 3rem 0;
+    padding: 6rem 0 0rem 0;
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -475,7 +475,7 @@
 
 @media (max-width: 480px) {
   .featured-projects-container {
-    padding: 4rem 0 2rem 0;
+    padding: 4rem 0 0rem 0;
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -605,7 +605,7 @@
 .how-i-work-container {
   position: relative;
   width: 100%;
-  padding: 2rem 0 0rem 0;
+  padding: 0rem 0 0rem 0;
   color: var(--base-500);
   margin-top: 0;
   margin-bottom: -4rem;
@@ -636,7 +636,7 @@
 
 @media (max-width: 768px) {
   .how-i-work-container {
-    padding: 1.5rem 0;
+    padding: 0;
   }
 
   .how-i-work-container .container {
