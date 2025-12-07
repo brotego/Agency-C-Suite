@@ -66,11 +66,33 @@
 
 /* Desktop: Position "Where We Can Help:" flush left, below description and above bubbles */
 @media (min-width: 1001px) {
+  .featured-projects .featured-project-card-description {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
   .featured-projects .featured-project-card-info {
-    margin-top: 1rem;
+    margin-top: 0;
     margin-bottom: 1rem;
     width: 100%;
     text-align: left;
+    position: relative;
+    padding-top: 1rem;
+  }
+
+  .featured-projects .featured-project-card-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .featured-projects .featured-project-card-tags-wrapper {
+    margin-top: 0;
   }
 }
 
@@ -98,6 +120,14 @@
 
 .featured-projects .featured-project-card-description.long-description p.lg {
   font-size: 1.125rem;
+}
+
+/* First card (Start-up) - description on one line for desktop */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card[data-card-index="0"] .featured-project-card-description p.lg:first-child,
+  .featured-projects .featured-project-card:nth-of-type(1) .featured-project-card-description p.lg:first-child {
+    white-space: nowrap;
+  }
 }
 
 /* Second card (Grow-up) - smaller description text */
@@ -170,8 +200,11 @@
   padding: 1rem 2rem;
 }
 
-.featured-projects .featured-project-tag-wrapper.has-long-description .featured-project-tag {
-  padding: 1rem 5rem !important;
+/* Desktop only: wider bubbles for long descriptions */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-tag-wrapper.has-long-description .featured-project-tag {
+    padding: 1rem 5rem !important;
+  }
 }
 
 .featured-projects .featured-project-tag:hover {
@@ -209,8 +242,11 @@
   box-sizing: border-box;
 }
 
-.featured-projects .featured-project-tag-description.long-description p {
-  font-size: 0.7rem;
+/* Desktop only: smaller text for long descriptions */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-tag-description.long-description p {
+    font-size: 0.7rem;
+  }
 }
 
 /* Card 1 (Start-up) - Smaller bubbles */
@@ -218,8 +254,11 @@
   padding: 0.75rem 1.5rem !important;
 }
 
-.featured-projects .featured-project-card:nth-of-type(1) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
-  padding: 0.75rem 3rem !important;
+/* Desktop only: wider bubbles for long descriptions on card 1 */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card:nth-of-type(1) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
+    padding: 0.75rem 5rem !important;
+  }
 }
 
 .featured-projects .featured-project-card:nth-of-type(1) .featured-project-tag-wrapper .featured-project-tag h3 {
@@ -248,9 +287,12 @@
   padding: 0.75rem 1.5rem !important;
 }
 
-.featured-projects .featured-project-card[data-card-index="1"] .featured-project-tag-wrapper.has-long-description .featured-project-tag,
-.featured-projects .featured-project-card:nth-of-type(2) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
-  padding: 0.75rem 3rem !important;
+/* Desktop only: wider bubbles for long descriptions on card 2 */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card[data-card-index="1"] .featured-project-tag-wrapper.has-long-description .featured-project-tag,
+  .featured-projects .featured-project-card:nth-of-type(2) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
+    padding: 0.75rem 5rem !important;
+  }
 }
 
 .featured-projects .featured-project-card[data-card-index="1"] .featured-project-tag-wrapper .featured-project-tag h3,
@@ -264,9 +306,12 @@
   padding: 0.75rem 1.5rem !important;
 }
 
-.featured-projects .featured-project-card[data-card-index="2"] .featured-project-tag-wrapper.has-long-description .featured-project-tag,
-.featured-projects .featured-project-card:nth-of-type(3) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
-  padding: 0.75rem 3rem !important;
+/* Desktop only: wider bubbles for long descriptions on card 3 */
+@media (min-width: 1001px) {
+  .featured-projects .featured-project-card[data-card-index="2"] .featured-project-tag-wrapper.has-long-description .featured-project-tag,
+  .featured-projects .featured-project-card:nth-of-type(3) .featured-project-tag-wrapper.has-long-description .featured-project-tag {
+    padding: 0.75rem 5rem !important;
+  }
 }
 
 .featured-projects .featured-project-card[data-card-index="2"] .featured-project-tag-wrapper .featured-project-tag h3,
@@ -277,6 +322,12 @@
 /* Mobile Layout - Numbered List */
 @media (max-width: 1000px) {
   /* Normal positioning - ScrollTrigger will handle pinning */
+  .featured-projects {
+    overflow: visible;
+    position: relative;
+    z-index: 0;
+  }
+
   .featured-projects .featured-project-card {
     position: relative;
     width: 100%;
@@ -285,6 +336,39 @@
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
+    z-index: 1;
+  }
+
+  .featured-projects .featured-project-card:first-child {
+    padding-top: 0;
+    margin-top: -3rem;
+    z-index: 0;
+  }
+
+  /* Add line above "Where We Can Help:" on mobile */
+  .featured-projects .featured-project-card-description {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .featured-projects .featured-project-card-info {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding-top: 1rem;
+  }
+
+  .featured-projects .featured-project-card-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   .featured-projects .featured-project-card-inner {
@@ -335,11 +419,19 @@
 
   .featured-projects .featured-project-mobile-item-number {
     flex-shrink: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     color: #ffffff;
-    line-height: 1.2;
     min-width: 2rem;
+    padding-top: 0.125rem;
+  }
+
+  .featured-projects .featured-project-mobile-item-number svg {
+    width: 24px;
+    height: 24px;
+    stroke: #ffffff;
+    stroke-width: 2;
   }
 
   .featured-projects .featured-project-mobile-item-content {

@@ -6,6 +6,59 @@ import { useEffect, useRef } from "react";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { 
+  Circle, 
+  Users, 
+  FileText, 
+  DollarSign, 
+  Settings, 
+  Calculator, 
+  Network, 
+  Target, 
+  Rocket, 
+  Briefcase, 
+  Handshake,
+  FileSearch,
+  Heart,
+  Megaphone,
+  Cog,
+  UserCheck,
+  Building2,
+  PenTool,
+  Scale,
+  TrendingUp,
+  Radio
+} from "lucide-react";
+
+// Map service names to appropriate icons
+const getServiceIcon = (serviceName) => {
+  const iconMap = {
+    "Partner Alignment": Users,
+    "Formation": FileText,
+    "Fundraising": DollarSign,
+    "Operations Set-up": Settings,
+    "Financial Planning": Calculator,
+    "Organization Planning": Network,
+    "Positioning": Target,
+    "Go-to-Market": Rocket,
+    "New Business": Briefcase,
+    "Client Management": Handshake,
+    "Financial": DollarSign,
+    "Business Review": FileSearch,
+    "Client Relationships": Heart,
+    "Marketing & PR": Megaphone,
+    "Operations": Cog,
+    "HR": UserCheck,
+    "M&A Planning": Building2,
+    "Proposal Development": PenTool,
+    "Legal": Scale,
+    "Growth Planning": TrendingUp,
+    "Operations Planning": Settings,
+    "PR": Radio,
+  };
+  
+  return iconMap[serviceName] || Circle;
+};
 
 const FeaturedProjects = () => {
 
@@ -360,29 +413,41 @@ const FeaturedProjects = () => {
                 </div>
                 <div className="featured-project-card-tags-wrapper">
                   <div className="featured-project-card-tags">
-                    {project.tags.map((tag, tagIndex) => (
-                      <div key={tagIndex} className="featured-project-tag-wrapper">
-                        <div className="featured-project-tag">
-                          <h3>{tag.name}</h3>
+                    {project.tags.map((tag, tagIndex) => {
+                      // Consider description long if it's over 80 characters
+                      const isLongDescription = tag.description && tag.description.length > 80;
+                      return (
+                        <div 
+                          key={tagIndex} 
+                          className={`featured-project-tag-wrapper ${isLongDescription ? 'has-long-description' : ''}`}
+                        >
+                          <div className="featured-project-tag">
+                            <h3>{tag.name}</h3>
+                          </div>
+                          <div className={`featured-project-tag-description ${isLongDescription ? 'long-description' : ''}`}>
+                            <p>{tag.description}</p>
+                          </div>
                         </div>
-                        <div className="featured-project-tag-description">
-                          <p>{tag.description}</p>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
                 {/* Mobile layout: numbered list */}
                 <div className="featured-project-mobile-list">
-                  {project.tags.map((tag, tagIndex) => (
-                    <div key={tagIndex} className="featured-project-mobile-item">
-                      <div className="featured-project-mobile-item-number">{tagIndex + 1}</div>
-                      <div className="featured-project-mobile-item-content">
-                        <h3 className="featured-project-mobile-item-title">{tag.name}</h3>
-                        <p className="featured-project-mobile-item-description">{tag.description}</p>
+                  {project.tags.map((tag, tagIndex) => {
+                    const IconComponent = getServiceIcon(tag.name);
+                    return (
+                      <div key={tagIndex} className="featured-project-mobile-item">
+                        <div className="featured-project-mobile-item-number">
+                          <IconComponent size={24} strokeWidth={2} />
+                        </div>
+                        <div className="featured-project-mobile-item-content">
+                          <h3 className="featured-project-mobile-item-title">{tag.name}</h3>
+                          <p className="featured-project-mobile-item-description">{tag.description}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>

@@ -34,6 +34,7 @@ const TopBar = () => {
   const splitTextRefs = useRef([]);
 
   const menuLinks = [
+    { label: "Home", route: "#hero" },
     { label: "What is ACS?", route: "#what-we-do" },
     { label: "Where We Can Help", route: "#featured-projects" },
     { label: "How We Work", route: "#how-i-work" },
@@ -250,18 +251,6 @@ const TopBar = () => {
         scrollDirection = -1; // Scrolling up
       }
       lastScrollY = currentScrollY;
-      
-      // Show logo when scrolling up (but not when at top, handled separately)
-      if (scrollDirection === -1 && currentScrollY > 0) {
-        // Show logo when scrolling up
-        if (logo) {
-          gsap.to(logo, {
-            y: 0,
-            duration: 0.6,
-            ease: "power4.out",
-          });
-        }
-      }
       
       // Expand button and show logo only when at top
       if (currentScrollY <= 1) { // Use <= 1 to catch cases where it might be slightly above 0 due to browser rounding

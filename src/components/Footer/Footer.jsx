@@ -15,6 +15,13 @@ const Footer = () => {
       <div className="footer-outro">
         <div className="container footer-outro-content">
           <div className="footer-outro-left">
+            <div className="footer-header">
+              <Copy delay={0.1}>
+                <h3>Get In Touch</h3>
+              </Copy>
+            </div>
+          </div>
+          <div className="footer-outro-right">
             <div className="footer-section">
               <Copy delay={0.15}>
                 <p className="footer-section-item">
@@ -40,13 +47,6 @@ const Footer = () => {
                 </p>
               </Copy>
             </div>
-            <div className="footer-header">
-              <Copy delay={0.1}>
-                <h3>Get In Touch</h3>
-              </Copy>
-            </div>
-          </div>
-          <div className="footer-outro-right">
           </div>
         </div>
         <div className="container">
