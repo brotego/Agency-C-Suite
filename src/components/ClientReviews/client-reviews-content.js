@@ -1,7 +1,7 @@
 const clientReviewsContent = [
   {
     id: 1,
-    name: "Ramaa Mosely",
+    name: "Ramaa Mosley",
     title: "Founder and Chief Creative Officer of Adolescent Content",
     image: "/client-reviews/client-review-1.jpg",
     avatar: "/logos/adolescentcontent_logo.jpeg",
