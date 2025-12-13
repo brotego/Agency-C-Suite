@@ -2,6 +2,7 @@
 import "./Footer.css";
 
 import Copy from "../Copy/Copy";
+import { trackEmailClick, trackPhoneClick, trackLinkClick, trackSocialClick } from "@/utils/analytics";
 import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
@@ -25,22 +26,44 @@ const Footer = () => {
             <div className="footer-section">
               <Copy delay={0.15}>
                 <p className="footer-section-item">
-                  <a href="mailto:Jordan@AgencyC-Suite.com">Jordan@AgencyC-Suite.com</a>
+                  <a 
+                    href="mailto:Jordan@AgencyC-Suite.com"
+                    onClick={() => trackEmailClick("Jordan@AgencyC-Suite.com")}
+                  >
+                    Jordan@AgencyC-Suite.com
+                  </a>
                 </p>
               </Copy>
               <Copy delay={0.2}>
                 <p className="footer-section-item">
-                  <a href="tel:+14158455433">+1 415 845-5433</a>
+                  <a 
+                    href="tel:+14158455433"
+                    onClick={() => trackPhoneClick("+1 415 845-5433")}
+                  >
+                    +1 415 845-5433
+                  </a>
                 </p>
               </Copy>
               <Copy delay={0.25}>
                 <p className="footer-section-item">
-                  <a href="https://www.AgencyC-Suite.com" target="_blank" rel="noopener noreferrer">www.AgencyC-Suite.com</a>
+                  <a 
+                    href="https://www.AgencyC-Suite.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={() => trackLinkClick("Website", "https://www.AgencyC-Suite.com", "Footer")}
+                  >
+                    www.AgencyC-Suite.com
+                  </a>
                 </p>
               </Copy>
               <Copy delay={0.3}>
                 <p className="footer-section-item footer-linkedin-item">
-                  <a href="https://www.linkedin.com/company/agencyc-suite/" target="_blank" rel="noopener noreferrer">
+                  <a 
+                    href="https://www.linkedin.com/company/agencyc-suite/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={() => trackSocialClick("LinkedIn", "https://www.linkedin.com/company/agencyc-suite/")}
+                  >
                     <FaLinkedin className="linkedin-icon" />
                     LinkedIn
                   </a>

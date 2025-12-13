@@ -10,6 +10,7 @@ import { useLenis } from "lenis/react";
 
 import { useViewTransition } from "@/hooks/useViewTransition";
 import AnimatedButton from "../AnimatedButton/AnimatedButton";
+import { trackNavigationClick, trackLinkClick } from "@/utils/analytics";
 import { IoMdClose } from "react-icons/io";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -745,6 +746,7 @@ const TopBar = () => {
           href="/"
           onClick={(e) => {
             e.preventDefault();
+            trackLinkClick("Logo", "/", "TopBar");
             navigateWithTransition("/");
           }}
         >
@@ -767,6 +769,7 @@ const TopBar = () => {
               className="menu-hover-link"
               onClick={(e) => {
                 e.preventDefault();
+                trackNavigationClick(link.label, "TopBar Navigation");
                 
                 // Close mobile overlay if open
                 if (isMobile && isMobileOverlayOpen) {
@@ -804,6 +807,7 @@ const TopBar = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              trackButtonClick("Menu Toggle", "TopBar");
               
               // On mobile, open overlay instead of dropdown
               if (isMobile) {
@@ -829,6 +833,7 @@ const TopBar = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              trackButtonClick("Close Mobile Menu", "TopBar");
               setIsMobileOverlayOpen(false);
             }}
             aria-label="Close menu"
@@ -846,6 +851,7 @@ const TopBar = () => {
                       href={link.route}
                       onClick={(e) => {
                         e.preventDefault();
+                        trackNavigationClick(link.label, "TopBar Mobile Menu");
                         if (isMobileOverlayOpen) {
                           setIsMobileOverlayOpen(false);
                         }

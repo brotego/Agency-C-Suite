@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { useViewTransition } from "@/hooks/useViewTransition";
+import { trackButtonClick } from "@/utils/analytics";
 
 import { IoMdArrowForward } from "react-icons/io";
 
@@ -157,6 +158,7 @@ const AnimatedButton = ({
         ref={buttonRef}
         onClick={(e) => {
           e.preventDefault();
+          trackButtonClick(label || 'Animated Button', route || 'unknown');
           navigateWithTransition(route);
         }}
       >
@@ -165,8 +167,15 @@ const AnimatedButton = ({
     );
   }
 
+  const handleButtonClick = (e) => {
+    trackButtonClick(label || 'Animated Button', 'button');
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
-    <button className="btn" ref={buttonRef} onClick={onClick}>
+    <button className="btn" ref={buttonRef} onClick={handleButtonClick}>
       {buttonContent}
     </button>
   );

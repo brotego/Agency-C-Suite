@@ -1,6 +1,7 @@
 "use client";
 import "./ClientReviews.css";
 import clientReviewsContent from "./client-reviews-content";
+import { trackLinkClick } from "@/utils/analytics";
 
 import { useRef, useEffect } from "react";
 
@@ -67,6 +68,7 @@ const ClientReviews = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="client-avatar-link"
+                  onClick={() => trackLinkClick(`Client: ${client.name}`, client.url, "Client Reviews")}
                 >
                   <div className="client-avatar">
                     <img src={client.avatar} alt={client.name} />

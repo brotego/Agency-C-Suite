@@ -13,6 +13,7 @@ import FeaturedProjects from "@/components/FeaturedProjects/FeaturedProjects";
 import ClientReviews from "@/components/ClientReviews/ClientReviews";
 import HowIWork from "@/components/HowIWork/HowIWork";
 import Copy from "@/components/Copy/Copy";
+import { trackSocialClick } from "@/utils/analytics";
 import { FaLinkedin } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
@@ -118,6 +119,7 @@ export default function Home() {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="linkedin-link"
+                      onClick={() => trackSocialClick("LinkedIn - Jordan Warren", "https://www.linkedin.com/in/jordanwarren")}
                     >
                       <FaLinkedin className="linkedin-icon" />
                     </a>
