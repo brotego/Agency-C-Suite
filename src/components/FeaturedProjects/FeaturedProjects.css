@@ -299,8 +299,8 @@
 
   .featured-projects .featured-project-card-inner {
     flex-direction: column;
-    width: max-content;
-    min-width: calc(100vw + 800px);
+    width: 100%;
+    max-width: 100%;
     padding: 1.5rem;
     gap: 1.5rem;
     overflow: hidden;
@@ -324,9 +324,8 @@
     flex-direction: column;
     gap: 1.25rem;
     flex-shrink: 0;
-    width: calc(100vw - 3rem);
-    max-width: 600px;
-    min-width: calc(100vw - 3rem);
+    width: 100%;
+    max-width: 100%;
   }
 
   .featured-projects .featured-project-card-info {
@@ -351,6 +350,14 @@
     width: 100%;
     text-align: left;
     max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .featured-projects .featured-project-card-description p.lg {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
   }
 
   .featured-projects .featured-project-card-tags-wrapper {
@@ -616,8 +623,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem 0;
+    padding: 1rem;
     z-index: 1;
+    box-sizing: border-box;
   }
 
   .featured-projects .featured-project-card:first-child {
@@ -668,6 +676,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
   }
 
   .featured-projects .featured-project-card-content {
@@ -675,6 +684,14 @@
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .featured-projects .featured-project-card-content-main {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Hide bubble tags on mobile */
