@@ -69,6 +69,7 @@ const FeaturedProjects = () => {
     const isMobile = window.innerWidth <= 1000;
     const resizeHandlers = [];
     const descriptionResizeHandlers = [];
+    const scrollTriggers = [];
 
     featuredProjectCards.forEach((featuredProjectCard, cardIndex) => {
       const tags = featuredProjectCard.querySelectorAll(".featured-project-tag");
@@ -151,10 +152,21 @@ const FeaturedProjects = () => {
       if (isMobile) {
         // Mobile: Pin card and allow horizontal scrolling of numbered items
         const mobileList = featuredProjectCard.querySelector(".featured-project-mobile-list");
+        let cardTrigger = null; // Store trigger reference for this card
         
         // Function to calculate and set up mobile pinning with horizontal scroll
         const setupMobilePin = () => {
           if (!mobileList) return;
+          
+          // Kill existing trigger if any
+          if (cardTrigger) {
+            cardTrigger.kill();
+            const index = scrollTriggers.indexOf(cardTrigger);
+            if (index > -1) {
+              scrollTriggers.splice(index, 1);
+            }
+            cardTrigger = null;
+          }
           
           // Get the mobile list items
           const mobileItems = mobileList.querySelectorAll(".featured-project-mobile-item");
@@ -187,40 +199,35 @@ const FeaturedProjects = () => {
           // This gives us enough scroll distance to smoothly scroll through all items
           const verticalScrollDistance = Math.max(window.innerHeight * 0.5, horizontalScrollDistance * 2);
           
-          // Only set up pin if content extends beyond viewport
-          if (horizontalScrollDistance > 0) {
-            ScrollTrigger.create({
-              trigger: featuredProjectCard,
-              start: "top top",
-              end: `+=${verticalScrollDistance}px`,
-              scrub: true,
-              pin: true,
-              pinSpacing: true,
-              anticipatePin: 0,
-              invalidateOnRefresh: false,
-              markers: false,
-              id: `featured-project-mobile-${cardIndex}`,
-              onEnter: () => {
-                featuredProjectCard.classList.add('is-pinned');
-              },
-              onLeave: () => {
-                featuredProjectCard.classList.remove('is-pinned');
-                gsap.set(mobileList, { x: -horizontalScrollDistance });
-              },
-              onLeaveBack: () => {
-                featuredProjectCard.classList.remove('is-pinned');
-                gsap.set(mobileList, { x: 0 });
-              },
-              onUpdate: (self) => {
-                const progress = Math.min(1, Math.max(0, self.progress));
-                // Animate the horizontal scroll of the mobile list
+          // Always set up pin, but use minimum scroll distance to prevent issues
+          // Use a minimum of 100px to ensure ScrollTrigger works properly even when content fits
+          const minScrollDistance = 100;
+          const endScrollDistance = Math.max(minScrollDistance, horizontalScrollDistance || minScrollDistance);
+          
+          cardTrigger = ScrollTrigger.create({
+            trigger: featuredProjectCard,
+            start: "top 15%",
+            end: `+=${endScrollDistance}px`,
+            scrub: true,
+            pin: true,
+            pinSpacing: true,
+            onUpdate: (self) => {
+              const progress = Math.min(1, Math.max(0, self.progress));
+              // Animate the horizontal scroll of the mobile list
+              // Only scroll if there's actual horizontal content to scroll
+              if (horizontalScrollDistance > 0) {
                 const translateX = -progress * horizontalScrollDistance;
                 gsap.set(mobileList, {
                   x: translateX,
                 });
-              },
-            });
-          }
+              } else {
+                // Keep at 0 if no horizontal scroll needed
+                gsap.set(mobileList, { x: 0 });
+              }
+            },
+          });
+          
+          scrollTriggers.push(cardTrigger);
         };
 
         // Initial setup with delay to ensure layout is ready
@@ -230,13 +237,6 @@ const FeaturedProjects = () => {
 
         // Also set up on window resize
         const handleResize = () => {
-          // Kill all triggers for this card
-          ScrollTrigger.getAll().forEach((trigger) => {
-            const triggerElement = trigger.trigger || trigger.vars?.trigger;
-            if (triggerElement === featuredProjectCard) {
-              trigger.kill();
-            }
-          });
           // Reset transform
           if (mobileList) {
             gsap.set(mobileList, { x: 0 });
@@ -373,14 +373,12 @@ const FeaturedProjects = () => {
     });
 
     return () => {
-      // Only kill ScrollTriggers that belong to FeaturedProjects
-      ScrollTrigger.getAll().forEach((trigger) => {
-        const triggerElement = trigger.trigger || trigger.vars?.trigger;
-        const isFeaturedProjectTrigger = featuredProjectCards.some(card => triggerElement === card);
-        if (isFeaturedProjectTrigger) {
-          trigger.kill();
-        }
+      // Kill all ScrollTriggers we created
+      scrollTriggers.forEach((trigger) => {
+        trigger.kill();
       });
+      scrollTriggers.length = 0;
+      
       resizeHandlers.forEach(({ handler }) => {
         window.removeEventListener("resize", handler);
       });
