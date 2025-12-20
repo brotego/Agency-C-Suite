@@ -4,7 +4,7 @@ import TopBar from "@/components/TopBar/TopBar";
 import Script from "next/script";
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://agencycsuite.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://agencyc-suite.com"),
   title: {
     default: "Agency C-Suite | Fractional Executives for Creative Agencies",
     template: "%s | Agency C-Suite",
@@ -79,7 +79,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://agencycsuite.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://agencyc-suite.com";
 
   // Structured data for Organization
   const organizationSchema = {
