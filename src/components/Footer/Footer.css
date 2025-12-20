@@ -115,9 +115,17 @@
   gap: 1.5rem;
 }
 
+.footer-section-desktop {
+  display: flex;
+}
+
+.footer-section-mobile {
+  display: none;
+}
+
 .footer-outro-right {
   flex: 0 0 auto;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
@@ -177,6 +185,12 @@
 
 .footer-linkedin-item .linkedin-icon {
   font-size: 1.25rem;
+}
+
+.linkedin-follow-widget {
+  margin-top: 0.5rem;
+  min-height: 20px;
+  display: block;
 }
 
 .footer-copyright {
@@ -268,6 +282,7 @@
   }
 
   .footer-outro-right {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
@@ -277,6 +292,14 @@
 
   .footer-section {
     align-items: flex-start;
+  }
+
+  .footer-section-desktop {
+    display: none;
+  }
+
+  .footer-section-mobile {
+    display: flex;
   }
 
   .footer-copyright {

@@ -10,7 +10,7 @@ import { useLenis } from "lenis/react";
 
 import { useViewTransition } from "@/hooks/useViewTransition";
 import AnimatedButton from "../AnimatedButton/AnimatedButton";
-import { trackNavigationClick, trackLinkClick } from "@/utils/analytics";
+import { trackNavigationClick, trackLinkClick, trackButtonClick } from "@/utils/analytics";
 import { IoMdClose } from "react-icons/io";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
