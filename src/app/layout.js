@@ -42,7 +42,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: baseUrl,
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://agencyc-suite.com",
     siteName: "Agency C-Suite",
     title: "Agency C-Suite | Fractional Executives for Creative Agencies",
     description: "Fractional executives for start-up and independent creative agencies. Expert guidance from 25+ years of agency leadership experience.",
