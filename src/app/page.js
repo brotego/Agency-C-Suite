@@ -29,7 +29,7 @@ export default function Home() {
           <div className="hero-content">
             <div className="hero-header">
               <Copy animateOnScroll={false} delay={0.85}>
-                <h1>Agency C-Suite: Fractional Executives for Start-up and Independent Creative Agencies
+                <h1>Fractional Executives for Start-up and Independent Creative Agencies
                 </h1>
               </Copy>
             </div>

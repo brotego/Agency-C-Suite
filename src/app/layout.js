@@ -11,6 +11,9 @@ export const metadata = {
   },
   description: "Fractional executives for start-up and independent creative agencies. Expert guidance in finance, legal, operations, and growth from 25+ years of agency leadership experience.",
   keywords: [
+    "Agency C-Suite",
+    "Agency C Suite",
+    "AgencyC-Suite",
     "fractional CEO",
     "fractional executives",
     "creative agency consulting",
@@ -20,7 +23,9 @@ export const metadata = {
     "creative agency startup",
     "agency operations",
     "independent agency",
-    "agency leadership"
+    "agency leadership",
+    "Jordan Warren",
+    "fractional agency executives"
   ],
   authors: [{ name: "Jordan Warren" }],
   creator: "Jordan Warren",
@@ -37,7 +42,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
+    url: baseUrl,
     siteName: "Agency C-Suite",
     title: "Agency C-Suite | Fractional Executives for Creative Agencies",
     description: "Fractional executives for start-up and independent creative agencies. Expert guidance from 25+ years of agency leadership experience.",
@@ -68,6 +73,9 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: "/",
+  },
   verification: {
     // Add your verification codes here when available
     // google: "your-google-verification-code",
@@ -86,6 +94,7 @@ export default function RootLayout({ children }) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Agency C-Suite",
+    alternateName: ["Agency C Suite", "AgencyC-Suite"],
     url: baseUrl,
     logo: `${baseUrl}/logo.JPEG`,
     description: "Fractional executives for start-up and independent creative agencies. Expert guidance from 25+ years of agency leadership experience.",
